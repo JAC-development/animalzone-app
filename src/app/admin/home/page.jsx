@@ -14,7 +14,7 @@ export default function Admin() {
         <div>
           <p className="text-gray-400">ANIMAL ZONE</p>
           <p className="text-4xl py-2">Hello, Cesar!</p>
-          <p className="text-gray-400">Have a nice management!</p>
+          <p className="text-gray-400">Have a nice management</p>
         </div>
 
         {/* Report quick action block */}
