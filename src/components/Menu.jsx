@@ -20,7 +20,7 @@ const Menu = () => {
   // Menu for admin
   if (pathname.startsWith('/admin')) {
     return (
-      <aside className="hidden lg:flex flex-col items-center justify-around p-4 h-screen w-4/12 2xl:w-1/5">
+      <aside className="hidden lg:flex flex-col items-center justify-around p-4 h-screen w-3/12 2xl:w-1/5">
         <div className="flex flex-col items-center">
           <Link href={'/admin'}>
             <Image src={logo} width={100} height={100} alt="logo" />
@@ -175,7 +175,7 @@ const Menu = () => {
         </div>
 
         <div className="flex flex-col gap-8">
-          <Link href={'/user'}>
+          <Link href={'/user/profile'}>
             <div className="flex gap-4 items-center">
               <div className={pathname === '/user/profile' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
                 <UserIcon className="w-8 h-8" />
@@ -185,7 +185,7 @@ const Menu = () => {
               </div>
             </div>
           </Link>
-          <Link href={'/user'}>
+          <Link href={'/user/history'}>
             <div className="flex gap-4 items-center">
               <div className={pathname === '/user/history' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
                 <ClockIcon className="w-8 h-8" />
@@ -387,7 +387,7 @@ const NavMobiile = () => {
           </div>
 
           <div className="flex flex-col gap-8">
-            <Link href={'/users'}>
+            <Link href={'/users/profile'}>
               <div className="flex gap-4 items-center">
                 <div className={pathname === '/user/profile' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
                   <UserIcon className="w-8 h-8" />
@@ -397,7 +397,7 @@ const NavMobiile = () => {
                 </div>
               </div>
             </Link>
-            <Link href={'/user'}>
+            <Link href={'/user/history'}>
               <div className="flex gap-4 items-center">
                 <div className={pathname === '/user/history' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
                   <ClockIcon className="w-8 h-8" />
