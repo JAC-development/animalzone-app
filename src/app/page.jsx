@@ -11,7 +11,6 @@ export default function Home() {
   const [user, setUser] = useState('');
   const [pass, setPass] = useState('');
   const form = useRef(null);
-
   // Get inputs data
   const handleSubmit = (e) => {
     e.preventDefault();
