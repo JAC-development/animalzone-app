@@ -109,7 +109,7 @@ const Menu = () => {
         <div className="flex flex-col gap-8">
           <Link href={'monitor/history'}>
             <div className="flex gap-4 items-center">
-              <div className={pathname === '/monitor/history' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
+              <div className={pathname === '/monitor' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
                 <ClockIcon className="w-8 h-8" />
               </div>
               <div>
