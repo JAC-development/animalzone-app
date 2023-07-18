@@ -1,7 +1,7 @@
 import { ArrowLeftCircleIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { FunnelIcon, PrinterIcon } from '@heroicons/react/24/solid';
 
-export default function AttendanceView() {
+export default function AttendanceViewAdmin() {
   return (
     <div className="px-8 py-12 lg:px-14 xl:px-24 w-full">
       {/* Go back section on top */}
@@ -38,12 +38,11 @@ export default function AttendanceView() {
           Añadir horas
         </button>
       </div>
-
       <div id="history-table" className="w-full">
         <table className="block md:table py-8 mx-auto w-full max-w-full overflow-x-auto">
           <thead>
             <tr>
-              <th className="px-10 py-5 sticky top-0">Full Name</th>
+              <th className="px-10 py-5 sticky top-0">Nombre Completo</th>
               <th className="px-10 py-5 sticky top-0">Registro</th>
               <th className="px-10 py-5 sticky top-0">Horas adicionales</th>
               <th className="px-10 py-5 sticky top-0">Time</th>
