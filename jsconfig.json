@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": "src",
     "paths": {
-      "@logos/*": ["assets/logos/*"],
+      "@logos/*": ["assets/logos/*"]
     }
   }
 }
