@@ -1,8 +1,15 @@
 'use client';
-import { useRef, useState } from 'react';
+import 'firebaseConfig';
+import { useContext, useRef, useState } from 'react';
+import { AuthContext } from 'hooks/useAuth';
+import { useRouter } from 'next/navigation';
+// import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import handleGetData from 'api/endpoints/useGetData';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
+// import axios from 'axios';
+import login from '@auth/login';
 
 // Images
 import logo from '@logos/primary-logo.png';
@@ -11,21 +18,51 @@ export default function Home() {
   const [user, setUser] = useState('');
   const [pass, setPass] = useState('');
   const form = useRef(null);
+  const route = useRouter();
+  const { setUserData } = useContext(AuthContext);
+
+  const handleData = () => {
+    handleGetData();
+  };
+
   // Get inputs data
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(form.current);
     const data = {
-      username: formData.get('username'),
+      email: formData.get('username'),
       password: formData.get('password'),
     };
 
-    console.log(data);
+    // signInWithEmailAndPassword(auth, formData.get('username'), formData.get('password'))
+    //   .then(async (res) => {
+    //     console.log(res.user.accessToken, 'Success logged');
+    //     const response = login(data.email);
+    //     console.log(response);
+    //     route.push(`/${response}`);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+
+    handleGetData(data.email, data.password)
+      .then((res) => {
+        if (res) {
+          const response = login(data.email, res.rol);
+          setUserData(res);
+          route.push(`/${response}`);
+        } else {
+          console.log('Credenciales incorrectas');
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
     <main className="h-screen w-full flex items-center justify-center">
-      <div className="w-10/12 max-w-md text-center">
+      <div className="w-auto max-w-md text-center">
         <div className="flex justify-center">
           <Image src={logo} width={100} height={100} alt="logo" />
         </div>
@@ -54,6 +91,7 @@ export default function Home() {
             Forgot your password?
           </Link>
         </div>
+        <button onClick={() => handleData()}>hello</button>
         <div className="w-full sm:w-4/5 font-light text-slate-600 mt-6 mx-auto">
           <p>All data is saved on the cloud, if you have any problem with the sign in please contact support.</p>
         </div>
