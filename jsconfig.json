@@ -4,6 +4,7 @@
     "paths": {
       "@logos/*": ["assets/logos/*"],
       "@components/*": ["components/*"],
+      "@auth/*": ["api/auth/*"],
     }
-  }
+  },
 }
