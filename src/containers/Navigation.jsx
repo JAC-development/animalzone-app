@@ -16,7 +16,7 @@ export const NavAdminDesktop = ({ pathname }) => {
           </div>
         </div>
       </Link>
-      <Link href={'/admin'}>
+      <Link href={'/admin/attendance'}>
         <div className="flex gap-4 items-center">
           <div className={pathname === '/admin/attendance' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
             <DocumentTextIcon className="w-8 h-8" />
@@ -44,7 +44,7 @@ export const NavAdminDesktop = ({ pathname }) => {
 export const NavMonitorDesktop = ({ pathname }) => {
   return (
     <div className="flex flex-col gap-8">
-      <Link href={'monitor/history'}>
+      <Link href={'/monitor'}>
         <div className="flex gap-4 items-center">
           <div className={pathname === '/monitor/history' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
             <ClockIcon className="w-8 h-8" />
@@ -65,7 +65,7 @@ export const NavMonitorDesktop = ({ pathname }) => {
           </div>
         </div>
       </Link>
-      <Link href={'/monitor/settings'}>
+      <Link href={'/monitor'}>
         <div className="flex gap-4 items-center">
           <div className={pathname === '/monitor/settings' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
             <Cog6ToothIcon className="w-8 h-8" />
@@ -92,7 +92,7 @@ export const NavUserDesktop = ({ pathname }) => {
           </div>
         </div>
       </Link>
-      <Link href={'/user/history'}>
+      <Link href={'/user'}>
         <div className="flex gap-4 items-center">
           <div className={pathname === '/user/history' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
             <ClockIcon className="w-8 h-8" />
@@ -109,7 +109,7 @@ export const NavUserDesktop = ({ pathname }) => {
 export const NavAdminMobile = ({ pathname, handleClick }) => {
   return (
     <div className="flex flex-col gap-8">
-      <Link href={'admin/users'} onClick={() => handleClick()}>
+      <Link href={'/admin/users'} onClick={() => handleClick()}>
         <div className="flex gap-4 items-center">
           <div className={pathname === '/admin/users' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
             <UserIcon className="w-8 h-8" />
@@ -120,7 +120,7 @@ export const NavAdminMobile = ({ pathname, handleClick }) => {
           </div>
         </div>
       </Link>
-      <Link href={'/'} onClick={() => handleClick()}>
+      <Link href={'/admin/attendance'} onClick={() => handleClick()}>
         <div className="flex gap-4 items-center">
           <div className={pathname === '/admin/attendance' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
             <DocumentTextIcon className="w-8 h-8" />
@@ -131,7 +131,7 @@ export const NavAdminMobile = ({ pathname, handleClick }) => {
           </div>
         </div>
       </Link>
-      <Link href={'/'} onClick={() => handleClick()}>
+      <Link href={'/admin'} onClick={() => handleClick()}>
         <div className="flex gap-4 items-center">
           <div className={pathname === '/admin/settings' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
             <Cog6ToothIcon className="w-8 h-8" />
@@ -148,7 +148,7 @@ export const NavAdminMobile = ({ pathname, handleClick }) => {
 export const NavMonitorMobile = ({ pathname, handleClick }) => {
   return (
     <div className="flex flex-col gap-8">
-      <Link href={'monitor/history'} onClick={() => handleClick()}>
+      <Link href={'/monitor'} onClick={() => handleClick()}>
         <div className="flex gap-4 items-center">
           <div className={pathname === '/monitor/history' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
             <ClockIcon className="w-8 h-8" />
@@ -159,7 +159,7 @@ export const NavMonitorMobile = ({ pathname, handleClick }) => {
           </div>
         </div>
       </Link>
-      <Link href={'/monitor'} onClick={() => handleClick()}>
+      <Link href={'/monitor/attendance'} onClick={() => handleClick()}>
         <div className="flex gap-4 items-center">
           <div className={pathname === '/monitor/attendance' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
             <DocumentTextIcon className="w-8 h-8" />
@@ -196,7 +196,7 @@ export const NavUserMobile = ({ pathname, handleClick }) => {
           </div>
         </div>
       </Link>
-      <Link href={'/user/history'} onClick={() => handleClick()}>
+      <Link href={'/user'} onClick={() => handleClick()}>
         <div className="flex gap-4 items-center">
           <div className={pathname === '/user/history' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
             <ClockIcon className="w-8 h-8" />
