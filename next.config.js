@@ -4,6 +4,9 @@ const nextConfig = {
   images: {
     domains: ['picsum.photos', 'fastly.picsum.photos'],
   },
+  env: {
+    secretKey: 'signInKey',
+  },
 };
 
 module.exports = nextConfig;
