@@ -3,8 +3,9 @@ import { CalendarDaysIcon, FunnelIcon, PrinterIcon } from '@heroicons/react/24/s
 import { ArrowLeftCircleIcon } from '@heroicons/react/24/outline';
 
 export default function AdminUsers() {
+  const show = true;
   return (
-    <div className="px-8 py-12 lg:px-14 xl:px-24">
+    <div className="px-8 py-12 lg:px-14 xl:px-24 lg:pt-24 w-full">
       {/* Go back section on top */}
       <div className="flex gap-4">
         <div className="flex items-start">
@@ -40,6 +41,84 @@ export default function AdminUsers() {
           06/06/2023
         </button>
       </div>
+
+      {show ? (
+        /* Table for history data */
+        <div id="history-table" className="w-full">
+          <table className="block md:table py-8 mx-auto w-full max-w-full overflow-x-auto">
+            <thead>
+              <tr>
+                <th className="px-10 py-5 sticky top-0">Full Name</th>
+                <th className="px-10 py-5 sticky top-0">Situation</th>
+                <th className="px-10 py-5 sticky top-0">Date</th>
+                <th className="px-10 py-5 sticky top-0">Time</th>
+              </tr>
+            </thead>
+            <tbody className="whitespace-nowrap">
+              <tr className="bg-gray-300">
+                <td className="px-10 py-5 text-center">
+                  <div className="flex items-center justify-center gap-4">
+                    <div className="w-8 h-8 bg-black rounded-full"></div>
+                    <p>Miriam Rodriguez</p>
+                  </div>
+                </td>
+                <td className="px-10 py-5 text-center">Assistance</td>
+                <td className="px-10 py-5 text-center">06/06/2023</td>
+                <td className="px-10 py-5 text-center">09:04 AM</td>
+              </tr>
+              <tr>
+                <td className="px-10 py-5 text-center">
+                  <div className="flex items-center justify-center gap-4">
+                    <div className="w-8 h-8 bg-black rounded-full"></div>
+                    <p>Victor Carrillo</p>
+                  </div>
+                </td>
+                <td className="px-10 py-5 text-center">Assistance</td>
+                <td className="px-10 py-5 text-center">06/06/2023</td>
+                <td className="px-10 py-5 text-center">09:04 AM</td>
+              </tr>
+              <tr className="bg-gray-300">
+                <td className="px-10 py-5 text-center">
+                  <div className="flex items-center justify-center gap-4">
+                    <div className="w-8 h-8 bg-black rounded-full"></div>
+                    <p>Jonathan Ocampo</p>
+                  </div>
+                </td>
+                <td className="px-10 py-5 text-center">Assistance</td>
+                <td className="px-10 py-5 text-center">06/06/2023</td>
+                <td className="px-10 py-5 text-center">09:04 AM</td>
+              </tr>
+              <tr>
+                <td className="px-10 py-5 text-center">
+                  <div className="flex items-center justify-center gap-4">
+                    <div className="w-8 h-8 bg-black rounded-full"></div>
+                    <p>Carlos Sanchez</p>
+                  </div>
+                </td>
+                <td className="px-10 py-5 text-center">Assistance</td>
+                <td className="px-10 py-5 text-center">06/06/2023</td>
+                <td className="px-10 py-5 text-center">09:04 AM</td>
+              </tr>
+              <tr className="bg-gray-300">
+                <td className="px-10 py-5 text-center">
+                  <div className="flex items-center justify-center gap-4">
+                    <div className="w-8 h-8 bg-black rounded-full"></div>
+                    <p>David Aguirre</p>
+                  </div>
+                </td>
+                <td className="px-10 py-5 text-center">Assistance</td>
+                <td className="px-10 py-5 text-center">06/06/2023</td>
+                <td className="px-10 py-5 text-center">09:04 AM</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        /* Empty data holder */
+        <div className="w-full">
+          <p className="text-center py-12 text-gray-400">No recent activity</p>
+        </div>
+      )}
     </div>
   );
 }
