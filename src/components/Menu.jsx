@@ -3,13 +3,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import 'firebaseConfig';
 import Cookies from 'js-cookie';
-import { NavUserMobile, NavMonitorMobile, NavAdminMobile, NavAdminDesktop, NavMonitorDesktop, NavUserDesktop } from 'containers/Navigation';
 import { usePathname, useRouter } from 'next/navigation';
 // import { getAuth, signOut } from 'firebase/auth';
 import { AuthContext } from 'hooks/useAuth';
 import { useState, useContext } from 'react';
 import { Slide } from 'react-awesome-reveal';
-import { Bars3Icon, InformationCircleIcon, ArrowRightOnRectangleIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { Bars3Icon, UserIcon, ClockIcon, DocumentTextIcon, Cog6ToothIcon, InformationCircleIcon, ArrowRightOnRectangleIcon, XMarkIcon } from '@heroicons/react/24/outline';
 
 // images
 import logo from '@logos/primary-logo.png';
@@ -46,7 +45,40 @@ const Menu = () => {
           </div>
         </div>
 
-        <NavAdminDesktop pathname={pathname} />
+        <div className="flex flex-col gap-8">
+          <Link href={'/admin/users'}>
+            <div className="flex gap-4 items-center">
+              <div className={pathname === '/admin/users' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
+                <UserIcon className="w-8 h-8" />
+              </div>
+              <div>
+                <p>Usuarios</p>
+                <p className="font-light">8 registrados</p>
+              </div>
+            </div>
+          </Link>
+          <Link href={'/admin/attendance'}>
+            <div className="flex gap-4 items-center">
+              <div className={pathname === '/admin/attendance' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
+                <DocumentTextIcon className="w-8 h-8" />
+              </div>
+              <div>
+                <p>Asistencia</p>
+                <p className="font-light">1 Capturado</p>
+              </div>
+            </div>
+          </Link>
+          <Link href={'/admin'}>
+            <div className="flex gap-4 items-center">
+              <div className={pathname === '/admin/settings' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
+                <Cog6ToothIcon className="w-8 h-8" />
+              </div>
+              <div>
+                <p>Configuraci&oacute;n</p>
+              </div>
+            </div>
+          </Link>
+        </div>
 
         <div className="w-full flex flex-col items-center">
           <div className="flex items-center gap-2">
@@ -82,7 +114,39 @@ const Menu = () => {
           </div>
         </div>
 
-        <NavMonitorDesktop pathname={pathname} />
+        <div className="flex flex-col gap-8">
+          <Link href={'/monitor'}>
+            <div className="flex gap-4 items-center">
+              <div className={pathname === '/monitor' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
+                <ClockIcon className="w-8 h-8" />
+              </div>
+              <div>
+                <p>Historial</p>
+                <p className="font-light">1 Capturado</p>
+              </div>
+            </div>
+          </Link>
+          <Link href={'/monitor/attendance'}>
+            <div className="flex gap-4 items-center">
+              <div className={pathname === '/monitor/attendance' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
+                <DocumentTextIcon className="w-8 h-8" />
+              </div>
+              <div>
+                <p>Asistencia</p>
+              </div>
+            </div>
+          </Link>
+          <Link href={'/monitor'}>
+            <div className="flex gap-4 items-center">
+              <div className={pathname === '/monitor/settings' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
+                <Cog6ToothIcon className="w-8 h-8" />
+              </div>
+              <div>
+                <p>Configuraci&oacute;n</p>
+              </div>
+            </div>
+          </Link>
+        </div>
 
         <div className="w-full flex flex-col items-center">
           <div className="flex items-center gap-2">
@@ -118,7 +182,28 @@ const Menu = () => {
           </div>
         </div>
 
-        <NavUserDesktop pathname={pathname} />
+        <div className="flex flex-col gap-8">
+          <Link href={'/user/profile'}>
+            <div className="flex gap-4 items-center">
+              <div className={pathname === '/user/profile' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
+                <UserIcon className="w-8 h-8" />
+              </div>
+              <div>
+                <p>Perfil</p>
+              </div>
+            </div>
+          </Link>
+          <Link href={'/user'}>
+            <div className="flex gap-4 items-center">
+              <div className={pathname === '/user' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
+                <ClockIcon className="w-8 h-8" />
+              </div>
+              <div>
+                <p>Mi historial</p>
+              </div>
+            </div>
+          </Link>
+        </div>
 
         <div className="w-full flex flex-col items-center">
           <div className="flex items-center gap-2">
@@ -183,7 +268,40 @@ const NavMobiile = () => {
             </div>
           </div>
 
-          <NavAdminMobile pathname={pathname} handleClick={() => handleClick()} />
+          <div className="flex flex-col gap-8">
+            <Link href={'/admin/users'} onClick={() => handleClick()}>
+              <div className="flex gap-4 items-center">
+                <div className={pathname === '/admin/users' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
+                  <UserIcon className="w-8 h-8" />
+                </div>
+                <div>
+                  <p>Usuarios</p>
+                  <p className="font-light">8 registrados</p>
+                </div>
+              </div>
+            </Link>
+            <Link href={'/admin/attendance'} onClick={() => handleClick()}>
+              <div className="flex gap-4 items-center">
+                <div className={pathname === '/admin/attendance' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
+                  <DocumentTextIcon className="w-8 h-8" />
+                </div>
+                <div>
+                  <p>Asistencia</p>
+                  <p className="font-light">1 Capturado</p>
+                </div>
+              </div>
+            </Link>
+            <Link href={'/admin'} onClick={() => handleClick()}>
+              <div className="flex gap-4 items-center">
+                <div className={pathname === '/admin/settings' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
+                  <Cog6ToothIcon className="w-8 h-8" />
+                </div>
+                <div>
+                  <p>Configuraci&oacute;n</p>
+                </div>
+              </div>
+            </Link>
+          </div>
 
           <div className="w-full flex flex-col items-center">
             <div className="flex items-center gap-2">
@@ -223,7 +341,39 @@ const NavMobiile = () => {
             </div>
           </div>
 
-          <NavMonitorMobile pathname={pathname} handleClick={() => handleClick()} />
+          <div className="flex flex-col gap-8">
+            <Link href={'/monitor'} onClick={() => handleClick()}>
+              <div className="flex gap-4 items-center">
+                <div className={pathname === '/monitor' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg p-4' : 'w-12 h-12 grid place-items-center rounded-lg'}>
+                  <ClockIcon className="w-8 h-8" />
+                </div>
+                <div>
+                  <p>Historial</p>
+                  <p className="font-light">1 Capturado</p>
+                </div>
+              </div>
+            </Link>
+            <Link href={'/monitor/attendance'} onClick={() => handleClick()}>
+              <div className="flex gap-4 items-center">
+                <div className={pathname === '/monitor/attendance' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
+                  <DocumentTextIcon className="w-8 h-8" />
+                </div>
+                <div>
+                  <p>Asistencia</p>
+                </div>
+              </div>
+            </Link>
+            <Link href={'/monitor'} onClick={() => handleClick()}>
+              <div className="flex gap-4 items-center">
+                <div className={pathname === '/monitor/settings' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
+                  <Cog6ToothIcon className="w-8 h-8" />
+                </div>
+                <div>
+                  <p>Configuraci&oacute;</p>
+                </div>
+              </div>
+            </Link>
+          </div>
 
           <div className="w-full flex flex-col items-center">
             <div className="flex items-center gap-2">
@@ -263,7 +413,28 @@ const NavMobiile = () => {
             </div>
           </div>
 
-          <NavUserMobile pathname={pathname} handleClick={() => handleClick()} />
+          <div className="flex flex-col gap-8">
+            <Link href={'/user/profile'} onClick={() => handleClick()}>
+              <div className="flex gap-4 items-center">
+                <div className={pathname === '/user/profile' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
+                  <UserIcon className="w-8 h-8" />
+                </div>
+                <div>
+                  <p>Perfil</p>
+                </div>
+              </div>
+            </Link>
+            <Link href={'/user'} onClick={() => handleClick()}>
+              <div className="flex gap-4 items-center">
+                <div className={pathname === '/user' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
+                  <ClockIcon className="w-8 h-8" />
+                </div>
+                <div>
+                  <p>Mi historial</p>
+                </div>
+              </div>
+            </Link>
+          </div>
 
           <div className="w-full flex flex-col items-center">
             <div className="flex items-center gap-2">

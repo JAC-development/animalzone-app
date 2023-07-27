@@ -8,8 +8,9 @@ import handleGetData from 'api/endpoints/useGetData';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
-// import axios from 'axios';
 import login from '@auth/login';
+// import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Images
 import logo from '@logos/primary-logo.png';
@@ -20,6 +21,16 @@ export default function Home() {
   const form = useRef(null);
   const route = useRouter();
   const { setUserData } = useContext(AuthContext);
+  // const notify = () =>
+  //   toast.success('Secion iniciada', {
+  //     position: 'top-right',
+  //     autoClose: 5000,
+  //     hideProgressBar: false,
+  //     closeOnClick: true,
+  //     pauseOnHover: false,
+  //     draggable: true,
+  //     theme: 'light',
+  //   });
 
   const handleData = () => {
     handleGetData();
@@ -51,6 +62,7 @@ export default function Home() {
           const response = login(data.email, res.rol);
           setUserData(res);
           route.push(`/${response}`);
+          // notify();
         } else {
           console.log('Credenciales incorrectas');
         }
@@ -96,6 +108,7 @@ export default function Home() {
           <p>All data is saved on the cloud, if you have any problem with the sign in please contact support.</p>
         </div>
       </div>
+      {/* <ToastContainer /> */}
     </main>
   );
 }
