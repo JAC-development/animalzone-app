@@ -1,19 +1,16 @@
 import { NextResponse } from 'next/server';
 import { jwtVerify } from 'jose';
-// import Cookies from 'js-cookie';
 
 export async function middleware(request) {
   const jwt = request.cookies.get('signIn');
-  console.log(jwt);
-  let rol = null;
+  console.log(jwt, 'carnalillo');
+  let rol;
   if (jwt !== undefined) {
     const { payload } = await jwtVerify(jwt.value, new TextEncoder().encode(process.env.secretKey));
     rol = payload.rol;
-  } else {
-    rol = null;
   }
 
-  if (!jwt) {
+  if (jwt == undefined) {
     return NextResponse.redirect(new URL('/', request.url));
   }
 

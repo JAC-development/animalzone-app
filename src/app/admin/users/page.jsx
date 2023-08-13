@@ -1,6 +1,7 @@
 import React from 'react';
 import { CalendarDaysIcon, FunnelIcon, PrinterIcon } from '@heroicons/react/24/solid';
 import { ArrowLeftCircleIcon } from '@heroicons/react/24/outline';
+import TableRow from '@components/TableRow';
 
 export default function AdminUsers() {
   const show = true;
@@ -55,55 +56,12 @@ export default function AdminUsers() {
               </tr>
             </thead>
             <tbody className="whitespace-nowrap">
+              <TableRow />
               <tr className="bg-gray-300">
                 <td className="px-10 py-5 text-center">
-                  <div className="flex items-center justify-center gap-4">
+                  <div className="flex items-center justify-start gap-4">
                     <div className="w-8 h-8 bg-black rounded-full"></div>
                     <p>Miriam Rodriguez</p>
-                  </div>
-                </td>
-                <td className="px-10 py-5 text-center">Assistance</td>
-                <td className="px-10 py-5 text-center">06/06/2023</td>
-                <td className="px-10 py-5 text-center">09:04 AM</td>
-              </tr>
-              <tr>
-                <td className="px-10 py-5 text-center">
-                  <div className="flex items-center justify-center gap-4">
-                    <div className="w-8 h-8 bg-black rounded-full"></div>
-                    <p>Victor Carrillo</p>
-                  </div>
-                </td>
-                <td className="px-10 py-5 text-center">Assistance</td>
-                <td className="px-10 py-5 text-center">06/06/2023</td>
-                <td className="px-10 py-5 text-center">09:04 AM</td>
-              </tr>
-              <tr className="bg-gray-300">
-                <td className="px-10 py-5 text-center">
-                  <div className="flex items-center justify-center gap-4">
-                    <div className="w-8 h-8 bg-black rounded-full"></div>
-                    <p>Jonathan Ocampo</p>
-                  </div>
-                </td>
-                <td className="px-10 py-5 text-center">Assistance</td>
-                <td className="px-10 py-5 text-center">06/06/2023</td>
-                <td className="px-10 py-5 text-center">09:04 AM</td>
-              </tr>
-              <tr>
-                <td className="px-10 py-5 text-center">
-                  <div className="flex items-center justify-center gap-4">
-                    <div className="w-8 h-8 bg-black rounded-full"></div>
-                    <p>Carlos Sanchez</p>
-                  </div>
-                </td>
-                <td className="px-10 py-5 text-center">Assistance</td>
-                <td className="px-10 py-5 text-center">06/06/2023</td>
-                <td className="px-10 py-5 text-center">09:04 AM</td>
-              </tr>
-              <tr className="bg-gray-300">
-                <td className="px-10 py-5 text-center">
-                  <div className="flex items-center justify-center gap-4">
-                    <div className="w-8 h-8 bg-black rounded-full"></div>
-                    <p>David Aguirre</p>
                   </div>
                 </td>
                 <td className="px-10 py-5 text-center">Assistance</td>

@@ -3,13 +3,13 @@ import 'firebaseConfig';
 import { useContext, useRef, useState } from 'react';
 import { AuthContext } from 'hooks/useAuth';
 import { useRouter } from 'next/navigation';
-// import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import handleGetData from 'api/endpoints/useGetData';
+import { handleGetAllData } from 'api/endpoints/useGetData';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
 import login from '@auth/login';
-// import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 // Images
@@ -21,19 +21,21 @@ export default function Home() {
   const form = useRef(null);
   const route = useRouter();
   const { setUserData } = useContext(AuthContext);
-  // const notify = () =>
-  //   toast.success('Secion iniciada', {
-  //     position: 'top-right',
-  //     autoClose: 5000,
-  //     hideProgressBar: false,
-  //     closeOnClick: true,
-  //     pauseOnHover: false,
-  //     draggable: true,
-  //     theme: 'light',
-  //   });
 
-  const handleData = () => {
-    handleGetData();
+  const notify = (text) =>
+    toast.error(text, {
+      position: 'top-right',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: 'colored',
+    });
+
+  const handleData = async () => {
+    handleGetAllData();
   };
 
   // Get inputs data
@@ -45,26 +47,14 @@ export default function Home() {
       password: formData.get('password'),
     };
 
-    // signInWithEmailAndPassword(auth, formData.get('username'), formData.get('password'))
-    //   .then(async (res) => {
-    //     console.log(res.user.accessToken, 'Success logged');
-    //     const response = login(data.email);
-    //     console.log(response);
-    //     route.push(`/${response}`);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
-
     handleGetData(data.email, data.password)
       .then((res) => {
         if (res) {
           const response = login(data.email, res.rol);
           setUserData(res);
           route.push(`/${response}`);
-          // notify();
         } else {
-          console.log('Credenciales incorrectas');
+          notify('Credenciales incorrectas');
         }
       })
       .catch((error) => {
@@ -76,7 +66,7 @@ export default function Home() {
     <main className="h-screen w-full flex items-center justify-center">
       <div className="w-auto max-w-md text-center">
         <div className="flex justify-center">
-          <Image src={logo} width={100} height={100} alt="logo" />
+          <Image src={logo} width={'auto'} height={'auto'} alt="logo" />
         </div>
         <div className="my-10">
           <p className="font-light">ANIMAL ZONE</p>
@@ -108,7 +98,7 @@ export default function Home() {
           <p>All data is saved on the cloud, if you have any problem with the sign in please contact support.</p>
         </div>
       </div>
-      {/* <ToastContainer /> */}
+      <ToastContainer />
     </main>
   );
 }

@@ -1,13 +1,11 @@
-import { getFirestore, collection, query, getDocs, where } from 'firebase/firestore';
+import { getFirestore, collection, query, getDocs, where, addDoc } from 'firebase/firestore';
 import { app } from 'firebaseConfig';
-import { encryptPassword } from 'utils/encrypt';
 import bcrypt from 'bcryptjs';
 
 // get the firestore
 const firestore = getFirestore(app);
 
 export default async function handleGetData(email, password) {
-  encryptPassword('hola');
   const snapshot = await getDocs(query(collection(firestore, 'usuarios'), where('email', '==', email)));
 
   const data = snapshot.docs.map((doc) => ({
@@ -25,6 +23,41 @@ export default async function handleGetData(email, password) {
     } else {
       return false;
     }
+  } else {
+    return false;
+  }
+}
+
+export async function handleAddData() {
+  const pass = await bcrypt.hash('cisco', 10);
+  const data = {
+    email: 'oscar@gmail.com',
+    password: pass,
+    rol: 'admin',
+    username: 'Oscar',
+  };
+  addDoc(collection(firestore, 'usuarios'), data)
+    .then((res) => {
+      console.log(res.id);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
+export async function handleGetAllData() {
+  const snapshot = await getDocs(collection(firestore, 'usuarios'));
+
+  const data = snapshot.docs.map((doc) => ({
+    id: doc.id,
+    email: doc.email,
+    password: doc.password,
+    ...doc.data(),
+  }));
+
+  if (data[0] !== undefined) {
+    console.log(data);
+    return data;
   } else {
     return false;
   }
