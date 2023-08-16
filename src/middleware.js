@@ -3,7 +3,6 @@ import { jwtVerify } from 'jose';
 
 export async function middleware(request) {
   const jwt = request.cookies.get('signIn');
-  console.log(jwt, 'carnalillo');
   let rol;
   if (jwt !== undefined) {
     const { payload } = await jwtVerify(jwt.value, new TextEncoder().encode(process.env.secretKey));

@@ -56,7 +56,6 @@ export async function handleGetAllData() {
   }));
 
   if (data[0] !== undefined) {
-    console.log(data);
     return data;
   } else {
     return false;
