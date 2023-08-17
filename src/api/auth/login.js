@@ -13,7 +13,7 @@ export default function login(email, rol) {
       },
       process.env.secretKey
     );
-    Cookies.set('signIn', token, { expires: 7, sameSite: 'None' });
+    Cookies.set('signIn', token, { expires: 7, secure: true, sameSite: 'None' });
     console.log('login successful');
   } catch (error) {
     console.log(error);
