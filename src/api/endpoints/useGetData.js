@@ -41,19 +41,19 @@ export async function handleAddData(data) {
   }
 }
 
-export async function handleGetAllData() {
-  const snapshot = await getDocs(collection(firestore, 'usuarios'));
+// export async function handleGetAllData() {
+//   const snapshot = await getDocs(collection(firestore, 'usuarios'));
 
-  const data = snapshot.docs.map((doc) => ({
-    id: doc.id,
-    email: doc.email,
-    password: doc.password,
-    ...doc.data(),
-  }));
+//   const data = snapshot.docs.map((doc) => ({
+//     id: doc.id,
+//     email: doc.email,
+//     password: doc.password,
+//     ...doc.data(),
+//   }));
 
-  if (data[0] !== undefined) {
-    return data;
-  } else {
-    return false;
-  }
-}
+//   if (data[0] !== undefined) {
+//     return data;
+//   } else {
+//     return false;
+//   }
+// }

@@ -1,20 +1,30 @@
 'use client';
 import React from 'react';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { PlusIcon, FunnelIcon, PrinterIcon } from '@heroicons/react/24/solid';
 import { ArrowLeftCircleIcon } from '@heroicons/react/24/outline';
-import { AdminRow } from '@components/TableRow';
+// import { AdminRow } from '@components/TableRow';
 import { handleAddData } from 'api/endpoints/useGetData';
 import bcrypt from 'bcryptjs';
 
-export default async function AdminUsers() {
+export default function AdminUsers() {
   const [show, setShow] = useState(true);
   const [showUsers] = useState(true);
-  const [userRole, setUserRole] = useState('user');
-  const [addName, setAddName] = useState('');
-  const [addSurname, setAddSurname] = useState('');
-  const [addEmail, setAddEmail] = useState('');
-  const pass = await bcrypt.hash('cisco', 10);
+  const form = useRef(null);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(form.current);
+    const pass = await bcrypt.hash('cisco', 10);
+    const data = {
+      name: formData.get('name'),
+      surname: formData.get('surname'),
+      email: formData.get('email'),
+      rol: formData.get('role'),
+      pass: pass,
+    };
+    handleAddData({ name: data.name, surname: data.surname, email: data.email, rol: data.rol, password: data.pass });
+  };
   return (
     <div className="px-8 py-12 lg:px-14 xl:px-24 lg:pt-24 w-full">
       {/* Go back section on top */}
@@ -56,39 +66,34 @@ export default async function AdminUsers() {
       {/* New user modal */}
       <div className={`fixed top-0 left-0 z-10 w-screen h-screen bg-black opacity-40 ${show ? 'block' : 'hidden'}`}></div>
       <div className={`fixed z-20 left-0 right-0 top-0 bottom-0 m-auto w-[90%] h-[65%] sm:w-[70%] md:w-[50%] lg:w-[40%] xl:w-[30%] bg-white py-6 px-8 sm:px-16 xl:px-18 ${show ? 'block' : 'hidden'}`}>
-        <div className="h-full flex flex-col justify-between py-6">
+        <form className="h-full flex flex-col justify-between py-6" ref={form} onSubmit={handleSubmit}>
           <div>
             <p className="text-center font-bold mb-4">Agregar usuario</p>
             <p className="text-center text-gray-700">Introduce los datos del nuevo usuario para el registro.</p>
           </div>
           <div className="flex gap-4 flex-col py-6">
-            <input onChange={(e) => setAddName(e.target.value)} className="outline-none border-2 border-gray-400 rounded-full px-4 py-2" type="text" placeholder="Nombre" />
-            <input onChange={(e) => setAddSurname(e.target.value)} className="outline-none border-2 border-gray-400 rounded-full px-4 py-2" type="text" placeholder="Apellido" />
-            <input onChange={(e) => setAddEmail(e.target.value)} className="outline-none border-2 border-gray-400 rounded-full px-4 py-2" type="text" placeholder="Correo electronico" />
-            <div className="flex justify-around">
-              <div className="flex gap-2">
-                <input type="radio" name="userRole" value={'user'} checked={userRole === 'user'} id="userRole" onChange={(e) => setUserRole(e.target.value)} />
-                <label htmlFor="userRole">Empleado</label>
-                <input type="radio" name="userRole" value={'admin'} checked={userRole === 'admin'} id="adminRole" onChange={(e) => setUserRole(e.target.value)} />
-                <label htmlFor="adminRole">Admin</label>
-                <input type="radio" name="userRole" value={'monitor'} checked={userRole === 'monitor'} id="monitorRole" onChange={(e) => setUserRole(e.target.value)} />
-                <label htmlFor="monitorRole">Monitor</label>
-              </div>
-            </div>
+            <input name="name" className="outline-none border-2 border-gray-400 rounded-full px-4 py-2" type="text" placeholder="Nombre" />
+            <input name="surname" className="outline-none border-2 border-gray-400 rounded-full px-4 py-2" type="text" placeholder="Apellido" />
+            <input name="email" className="outline-none border-2 border-gray-400 rounded-full px-4 py-2" type="text" placeholder="Correo electronico" />
+          </div>
+          <div className="flex gap-4 flex-col py-6">
+            <select name="role" defaultValue={'user'} className="outline-none border-2 border-gray-400 rounded-full px-4 py-2">
+              <option value="user">Empleado</option>
+              <option value="admin" selected>
+                Administrador
+              </option>
+              <option value="monitor">Monitor</option>
+            </select>
           </div>
           <div>
-            <button
-              disabled={userRole === undefined}
-              onClick={() => handleAddData({ name: addName, surname: addSurname, email: addEmail, rol: userRole, password: pass })}
-              className="bg-yellow-500 disabled:opacity-40 text-black font-semibold py-2 px-5 rounded-full w-full mb-3"
-            >
+            <button className="bg-yellow-500 disabled:opacity-40 text-black font-semibold py-2 px-5 rounded-full w-full mb-3" type="submit">
               Registrar
             </button>
             <button onClick={() => setShow(!show)} className="border-gray-500 border-2 text-gray-600 py-2 px-5 rounded-full w-full">
               Cancelar
             </button>
           </div>
-        </div>
+        </form>
       </div>
 
       {showUsers ? (
@@ -103,9 +108,9 @@ export default async function AdminUsers() {
                 <th className="px-10 py-5 sticky top-0">Actions</th>
               </tr>
             </thead>
-            <tbody className="whitespace-nowrap">
+            {/* <tbody className="whitespace-nowrap">
               <AdminRow />
-            </tbody>
+            </tbody> */}
           </table>
         </div>
       ) : (
