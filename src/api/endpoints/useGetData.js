@@ -28,21 +28,17 @@ export default async function handleGetData(email, password) {
   }
 }
 
-export async function handleAddData() {
-  const pass = await bcrypt.hash('cisco', 10);
-  const data = {
-    email: 'oscar@gmail.com',
-    password: pass,
-    rol: 'admin',
-    username: 'Oscar',
-  };
-  addDoc(collection(firestore, 'usuarios'), data)
-    .then((res) => {
-      console.log(res.id);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+export async function handleAddData(data) {
+  console.log(data);
+  if (data) {
+    addDoc(collection(firestore, 'usuarios'), data)
+      .then((res) => {
+        console.log(res.id);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 }
 
 export async function handleGetAllData() {

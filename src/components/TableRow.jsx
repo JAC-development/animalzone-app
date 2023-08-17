@@ -47,10 +47,9 @@ const AdvanceRow = ({ data }) => {
 
 const AdminRow = async () => {
   const userArray = await handleGetAllData();
-  console.log(userArray);
 
-  // const userList = userArray.map((user) => <AdvanceRow data={user} key={user.id} />);
-  // return userList;
+  const userList = userArray.map((user) => <AdvanceRow data={user} key={user.id} />);
+  return userList;
 };
 
 const TableRow = async () => {
