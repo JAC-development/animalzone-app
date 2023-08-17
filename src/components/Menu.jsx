@@ -4,7 +4,6 @@ import Link from 'next/link';
 import 'firebaseConfig';
 import Cookies from 'js-cookie';
 import { usePathname, useRouter } from 'next/navigation';
-// import { getAuth, signOut } from 'firebase/auth';
 import { AuthContext } from 'hooks/useAuth';
 import { useState, useContext } from 'react';
 import { Slide } from 'react-awesome-reveal';
@@ -232,17 +231,7 @@ const NavMobiile = () => {
     setClick(!click);
   };
 
-  // const auth = getAuth();
   const logOut = () => {
-    // signOut(auth)
-    //   .then(() => {
-    //     console.log('log out');
-    //     Cookies.remove('signIn');
-    //     route.push('/');
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
     Cookies.remove('signIn');
     setUserData('Without user');
     route.push('/');

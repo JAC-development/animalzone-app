@@ -4,7 +4,6 @@ import { useContext, useRef, useState } from 'react';
 import { AuthContext } from 'hooks/useAuth';
 import { useRouter } from 'next/navigation';
 import handleGetData from 'api/endpoints/useGetData';
-import { handleGetAllData } from 'api/endpoints/useGetData';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
@@ -33,10 +32,6 @@ export default function Home() {
       progress: undefined,
       theme: 'colored',
     });
-
-  const handleData = async () => {
-    handleGetAllData();
-  };
 
   // Get inputs data
   const handleSubmit = (e) => {
@@ -74,9 +69,25 @@ export default function Home() {
         </div>
         <form className="flex flex-col my-4 text-start gap-2" ref={form} onSubmit={handleSubmit}>
           <label htmlFor="username">Username</label>
-          <input className="rounded-full border-2 border-black px-4 py-2 outline-none mb-6" name="username" onChange={(e) => setUser(e.target.value)} type="text" placeholder="Enter your username" />
+          <input
+            className="rounded-full border-2 border-black px-4 py-2 outline-none mb-6"
+            id="username"
+            name="username"
+            autoComplete="email"
+            onChange={(e) => setUser(e.target.value)}
+            type="text"
+            placeholder="Enter your username"
+          />
           <label htmlFor="password">Password</label>
-          <input className="rounded-full border-2 border-black px-4 py-2 outline-none mb-6" name="password" onChange={(e) => setPass(e.target.value)} type="text" placeholder="Enter your password" />
+          <input
+            className="rounded-full border-2 border-black px-4 py-2 outline-none mb-6"
+            id="password"
+            autoComplete="current-password"
+            name="password"
+            onChange={(e) => setPass(e.target.value)}
+            type="text"
+            placeholder="Enter your password"
+          />
 
           <div className="w-full flex justify-center my-4">
             <button
@@ -93,7 +104,6 @@ export default function Home() {
             Forgot your password?
           </Link>
         </div>
-        <button onClick={() => handleData()}>hello</button>
         <div className="w-full sm:w-4/5 font-light text-slate-600 mt-6 mx-auto">
           <p>All data is saved on the cloud, if you have any problem with the sign in please contact support.</p>
         </div>
