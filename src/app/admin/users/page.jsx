@@ -8,8 +8,11 @@ import { handleAddData } from 'api/endpoints/useGetData';
 import bcrypt from 'bcryptjs';
 
 export default function AdminUsers() {
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
   const [showUsers] = useState(true);
+  const [userName, setUserName] = useState(null);
+  const [userSurname, setUserSurname] = useState(null);
+  const [userEmail, setUserEmail] = useState(null);
   const [tableData, setTableData] = useState(null);
   const form = useRef(null);
 
@@ -72,7 +75,10 @@ export default function AdminUsers() {
           </span>
           Sort by
         </button>
-        <button className="row-start-2 hover:bg-gray-300 py-2 px-5 rounded-full md:row-start-1 col-span-2 md:col-span-2 md:col-start-7 ml-auto flex gap-2 items-center font-bold">
+        <button
+          onClick={() => setShow(!show)}
+          className="row-start-2 hover:bg-gray-300 py-2 px-5 rounded-full md:row-start-1 col-span-2 md:col-span-2 md:col-start-7 ml-auto flex gap-2 items-center font-bold"
+        >
           <span>
             <PlusIcon className="w-5 h-5" />
           </span>
@@ -89,9 +95,33 @@ export default function AdminUsers() {
             <p className="text-center text-gray-700">Introduce los datos del nuevo usuario para el registro.</p>
           </div>
           <div className="flex gap-4 flex-col py-6">
-            <input autoComplete="given-name" id="name" name="name" className="outline-none border-2 border-gray-400 rounded-full px-4 py-2" type="text" placeholder="Nombre" />
-            <input autoComplete="family-name" id="surname" name="surname" className="outline-none border-2 border-gray-400 rounded-full px-4 py-2" type="text" placeholder="Apellido" />
-            <input autoComplete="email" id="email" name="email" className="outline-none border-2 border-gray-400 rounded-full px-4 py-2" type="text" placeholder="Correo electronico" />
+            <input
+              onChange={(e) => setUserName(e.target.value)}
+              autoComplete="given-name"
+              id="name"
+              name="name"
+              className="outline-none border-2 border-gray-400 rounded-full px-4 py-2"
+              type="text"
+              placeholder="Nombre"
+            />
+            <input
+              onChange={(e) => setUserSurname(e.target.value)}
+              autoComplete="family-name"
+              id="surname"
+              name="surname"
+              className="outline-none border-2 border-gray-400 rounded-full px-4 py-2"
+              type="text"
+              placeholder="Apellido"
+            />
+            <input
+              onChange={(e) => setUserEmail(e.target.value)}
+              autoComplete="email"
+              id="email"
+              name="email"
+              className="outline-none border-2 border-gray-400 rounded-full px-4 py-2"
+              type="text"
+              placeholder="Correo electronico"
+            />
           </div>
           <div className="flex gap-4 flex-col py-6">
             <select name="role" defaultValue={'user'} className="outline-none border-2 border-gray-400 rounded-full px-4 py-2">
@@ -101,7 +131,7 @@ export default function AdminUsers() {
             </select>
           </div>
           <div>
-            <button className="bg-yellow-500 disabled:opacity-40 text-black font-semibold py-2 px-5 rounded-full w-full mb-3" type="submit">
+            <button disabled={!userName || !userSurname || !userEmail} className="bg-yellow-500 disabled:opacity-40 text-black font-semibold py-2 px-5 rounded-full w-full mb-3" type="submit">
               Registrar
             </button>
             <button onClick={() => setShow(!show)} className="border-gray-500 border-2 text-gray-600 py-2 px-5 rounded-full w-full">
