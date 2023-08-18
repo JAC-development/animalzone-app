@@ -1,3 +1,4 @@
+'use client';
 import { getFirestore, collection, query, getDocs, where, addDoc } from 'firebase/firestore';
 import { app } from 'firebaseConfig';
 import bcrypt from 'bcryptjs';
@@ -34,6 +35,7 @@ export async function handleAddData(data) {
     addDoc(collection(firestore, 'usuarios'), data)
       .then((res) => {
         console.log(res.id);
+        return true;
       })
       .catch((err) => {
         console.log(err);
@@ -41,19 +43,24 @@ export async function handleAddData(data) {
   }
 }
 
+export async function handleGetAllData() {
+  const snapshot = await getDocs(collection(firestore, 'usuarios'));
+
+  const data = snapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+
+  return data;
+}
+
 // export async function handleGetAllData() {
-//   const snapshot = await getDocs(collection(firestore, 'usuarios'));
+//   const snapshot = await getDocs(query(collection(firestore, 'usuarios'), where('email', '!=', '')));
 
 //   const data = snapshot.docs.map((doc) => ({
 //     id: doc.id,
-//     email: doc.email,
-//     password: doc.password,
 //     ...doc.data(),
 //   }));
 
-//   if (data[0] !== undefined) {
-//     return data;
-//   } else {
-//     return false;
-//   }
+//   return data;
 // }

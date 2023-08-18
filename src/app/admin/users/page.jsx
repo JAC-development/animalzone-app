@@ -1,16 +1,30 @@
 'use client';
-import React from 'react';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { PlusIcon, FunnelIcon, PrinterIcon } from '@heroicons/react/24/solid';
 import { ArrowLeftCircleIcon } from '@heroicons/react/24/outline';
-// import { AdminRow } from '@components/TableRow';
+import { AdvanceRow } from '@components/TableRow';
+import { handleGetAllData } from 'api/endpoints/useGetData';
 import { handleAddData } from 'api/endpoints/useGetData';
 import bcrypt from 'bcryptjs';
 
 export default function AdminUsers() {
   const [show, setShow] = useState(true);
   const [showUsers] = useState(true);
+  const [tableData, setTableData] = useState(null);
   const form = useRef(null);
+
+  // Render the users list
+  useEffect(() => {
+    const fetchData = async () => {
+      const userArray = await handleGetAllData();
+
+      const userList = userArray.map((user) => <AdvanceRow data={user} key={user.id} />);
+
+      setTableData(userList);
+    };
+
+    fetchData();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,8 +37,11 @@ export default function AdminUsers() {
       rol: formData.get('role'),
       pass: pass,
     };
-    handleAddData({ name: data.name, surname: data.surname, email: data.email, rol: data.rol, password: data.pass });
+    if (data.name != '' || data.email != '') {
+      handleAddData({ name: data.name, surname: data.surname, email: data.email, rol: data.rol, password: data.pass });
+    }
   };
+
   return (
     <div className="px-8 py-12 lg:px-14 xl:px-24 lg:pt-24 w-full">
       {/* Go back section on top */}
@@ -72,16 +89,14 @@ export default function AdminUsers() {
             <p className="text-center text-gray-700">Introduce los datos del nuevo usuario para el registro.</p>
           </div>
           <div className="flex gap-4 flex-col py-6">
-            <input name="name" className="outline-none border-2 border-gray-400 rounded-full px-4 py-2" type="text" placeholder="Nombre" />
-            <input name="surname" className="outline-none border-2 border-gray-400 rounded-full px-4 py-2" type="text" placeholder="Apellido" />
-            <input name="email" className="outline-none border-2 border-gray-400 rounded-full px-4 py-2" type="text" placeholder="Correo electronico" />
+            <input autoComplete="given-name" id="name" name="name" className="outline-none border-2 border-gray-400 rounded-full px-4 py-2" type="text" placeholder="Nombre" />
+            <input autoComplete="family-name" id="surname" name="surname" className="outline-none border-2 border-gray-400 rounded-full px-4 py-2" type="text" placeholder="Apellido" />
+            <input autoComplete="email" id="email" name="email" className="outline-none border-2 border-gray-400 rounded-full px-4 py-2" type="text" placeholder="Correo electronico" />
           </div>
           <div className="flex gap-4 flex-col py-6">
             <select name="role" defaultValue={'user'} className="outline-none border-2 border-gray-400 rounded-full px-4 py-2">
               <option value="user">Empleado</option>
-              <option value="admin" selected>
-                Administrador
-              </option>
+              <option value="admin">Administrador</option>
               <option value="monitor">Monitor</option>
             </select>
           </div>
@@ -108,9 +123,7 @@ export default function AdminUsers() {
                 <th className="px-10 py-5 sticky top-0">Actions</th>
               </tr>
             </thead>
-            {/* <tbody className="whitespace-nowrap">
-              <AdminRow />
-            </tbody> */}
+            <tbody className="whitespace-nowrap">{tableData}</tbody>
           </table>
         </div>
       ) : (
