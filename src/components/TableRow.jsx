@@ -17,17 +17,17 @@ const SimpleRow = ({ data }) => {
   );
 };
 
-const AdvanceRow = ({ data }) => {
+const AdvanceRow = ({ data, del }) => {
   return (
     <tr>
       <td className="px-10 py-5 text-center">
-        <div className="flex items-center justify-start gap-4">
-          <div className="w-8 h-8 bg-black rounded-full"></div>
-          <p>{data.fullname || 'Carlos'}</p>
+        <div className="flex items-center justify-center gap-4">
+          {/* <div className="w-8 h-8 bg-black rounded-full"></div> */}
+          <p className="capitalize">{`${data.name} ${data.surname}` || 'Carlos'}</p>
         </div>
       </td>
-      <td className="px-10 py-5 text-center">{data?.situation}</td>
-      <td className="px-10 py-5 text-center">{data?.date}</td>
+      <td className="px-10 py-5 text-center">{data?.record || '---'}</td>
+      <td className="px-10 py-5 text-center capitalize">{data?.rol}</td>
       <td className="px-10 py-5 flex gap-2 items-center justify-center">
         <button className="px-5 py-2 bg-gray-700 rounded-full text-white flex gap-2 items-center font-bold">
           <span>
@@ -35,7 +35,7 @@ const AdvanceRow = ({ data }) => {
           </span>
           Edit
         </button>
-        <button className="px-5 py-3 bg-red-600 rounded-full text-white flex gap-2 items-center font-bold">
+        <button onClick={() => del(data.id)} className="px-5 py-3 bg-red-600 rounded-full text-white flex gap-2 items-center font-bold">
           <span>
             <TrashIcon className="w-5 h-5" />
           </span>

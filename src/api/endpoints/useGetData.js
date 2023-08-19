@@ -1,5 +1,5 @@
 'use client';
-import { getFirestore, collection, query, getDocs, where, addDoc } from 'firebase/firestore';
+import { getFirestore, collection, query, getDocs, where, addDoc, doc, deleteDoc } from 'firebase/firestore';
 import { app } from 'firebaseConfig';
 import bcrypt from 'bcryptjs';
 
@@ -26,6 +26,19 @@ export default async function handleGetData(email, password) {
     }
   } else {
     return false;
+  }
+}
+
+export async function handleDeleteData(data) {
+  console.log(data);
+  if (data) {
+    await deleteDoc(doc(firestore, 'usuarios', data))
+      .then(() => {
+        console.log('user deleted');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 }
 
