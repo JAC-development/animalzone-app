@@ -47,17 +47,21 @@ export async function middleware(request) {
 
   // redirects for user logged
   if (request.nextUrl.pathname.startsWith(`/${rol}`)) {
-    try {
-      const { payload } = await jwtVerify(jwt.value, new TextEncoder().encode(process.env.secretKey));
-      console.log({ payload });
-      return NextResponse.next();
-    } catch (error) {
-      console.error(error);
+    if (!jwt) {
       return NextResponse.redirect(new URL('/', request.url));
+    } else {
+      try {
+        const { payload } = await jwtVerify(jwt.value, new TextEncoder().encode(process.env.secretKey));
+        console.log({ payload });
+        return NextResponse.next();
+      } catch (error) {
+        console.error(error);
+        return NextResponse.redirect(new URL('/', request.url));
+      }
     }
   }
 }
 
 export const config = {
-  matcher: ['/user/:path*', '/admin:path*', '/monitor/:path*'],
+  matcher: ['/user/:path*', '/admin/:path*', '/monitor/:path*'],
 };
