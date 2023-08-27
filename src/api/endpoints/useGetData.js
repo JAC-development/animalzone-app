@@ -1,5 +1,5 @@
 'use client';
-import { getFirestore, collection, query, getDocs, where, addDoc, doc, deleteDoc } from 'firebase/firestore';
+import { getFirestore, collection, query, getDocs, where, addDoc, doc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { app } from 'firebaseConfig';
 import bcrypt from 'bcryptjs';
 
@@ -56,6 +56,20 @@ export async function handleAddData(data) {
   }
 }
 
+export async function handleModifyData(data) {
+  console.log(data);
+  const ref = doc(firestore, 'usuarios', data._id);
+  if (data) {
+    await updateDoc(ref, { name: data.name, surname: data.surname, email: data.surname, rol: data.rol })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+}
+
 export async function handleGetAllData() {
   const snapshot = await getDocs(collection(firestore, 'usuarios'));
 
@@ -67,13 +81,15 @@ export async function handleGetAllData() {
   return data;
 }
 
-// export async function handleGetAllData() {
-//   const snapshot = await getDocs(query(collection(firestore, 'usuarios'), where('email', '!=', '')));
+export async function handleGetUserDates(ref) {
+  const snapshot = await getDocs(collection(firestore, 'attendance', ref, 'history'));
 
-//   const data = snapshot.docs.map((doc) => ({
-//     id: doc.id,
-//     ...doc.data(),
-//   }));
+  const data = snapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
 
-//   return data;
-// }
+  console.log(data);
+
+  return data;
+}

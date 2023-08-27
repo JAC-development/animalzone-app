@@ -1,11 +1,13 @@
 'use client';
 import React from 'react';
 import { ChevronRightIcon, EllipsisHorizontalCircleIcon } from '@heroicons/react/24/solid';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { AuthContext } from 'hooks/useAuth';
 
 export default function Admin() {
   const show = true;
   const [openTab, setOpenTab] = useState('viewUsers');
+  const { userData } = useContext(AuthContext);
   return (
     <div className="px-8 pb-16 pt-24 lg:px-14 xl:px-24 flex flex-col justify-between">
       {/* Main section */}
@@ -13,8 +15,8 @@ export default function Admin() {
         {/* Welcome message */}
         <div>
           <p className="text-gray-400">ANIMAL ZONE</p>
-          <p className="text-5xl py-2">Hola, Cesar!</p>
-          <p className="text-gray-400">Administrador</p>
+          <p className="text-5xl py-2">Hola, {userData.name}!</p>
+          <p className="text-gray-400">{userData.rol}</p>
         </div>
 
         {/* Report quick action block */}

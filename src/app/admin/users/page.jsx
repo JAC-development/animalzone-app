@@ -5,7 +5,7 @@ import { useState, useRef, useEffect } from 'react';
 import { PlusIcon, FunnelIcon, PrinterIcon } from '@heroicons/react/24/solid';
 import { ArrowLeftCircleIcon } from '@heroicons/react/24/outline';
 import { AdvanceRow } from '@components/TableRow';
-import { handleGetAllData, handleDeleteData, handleAddData } from 'api/endpoints/useGetData';
+import { handleGetAllData, handleDeleteData, handleAddData, handleModifyData } from 'api/endpoints/useGetData';
 import bcrypt from 'bcryptjs';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -56,10 +56,22 @@ export default function AdminUsers() {
       });
   };
 
+  const handleEditUser = async (id, name, surname, email, rol) => {
+    handleModifyData(id, name, surname, email, rol)
+      .then(async () => {
+        notifySuccess('Usuario modificado correctamente');
+        fetchData();
+      })
+      .catch((error) => {
+        console.log(error);
+        notifyError('Algo salio mal.');
+      });
+  };
+
   const fetchData = async () => {
     const userArray = await handleGetAllData();
     console.log(userArray);
-    const userList = userArray.map((user) => <AdvanceRow data={user} del={handleDeleteUser} key={user.id} />);
+    const userList = userArray.map((user) => <AdvanceRow data={user} del={handleDeleteUser} edit={handleEditUser} key={user.id} />);
     setTableData(userList);
   };
 
@@ -76,6 +88,7 @@ export default function AdminUsers() {
   //   setTableData(userList);
   // }, [search]);
 
+  // Add user function
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(form.current);
@@ -178,7 +191,7 @@ export default function AdminUsers() {
               placeholder="Correo electronico"
             />
             <select name="role" defaultValue={'user'} className="outline-none border-2 mt-4 border-gray-400 rounded-full px-4 py-2">
-              <option value="user">Empleado</option>
+              <option value="user">Usuario</option>
               <option value="admin">Administrador</option>
               <option value="monitor">Monitor</option>
             </select>
