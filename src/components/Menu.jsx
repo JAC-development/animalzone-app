@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -8,13 +9,13 @@ import { useLocalStorage } from 'hooks/useLocalStorage';
 import { AuthContext } from 'hooks/useAuth';
 import { useState, useContext } from 'react';
 import { Slide } from 'react-awesome-reveal';
-import { Bars3Icon, UserIcon, ClockIcon, DocumentTextIcon, Cog6ToothIcon, InformationCircleIcon, ArrowRightOnRectangleIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { Bars3Icon, UserIcon, ClockIcon, DocumentTextIcon, Cog6ToothIcon, InformationCircleIcon, ArrowRightOnRectangleIcon, XMarkIcon, CameraIcon } from '@heroicons/react/24/outline';
 
 // images
 import logo from '@logos/primary-logo.png';
 const profile = 'https://picsum.photos/200/300';
 
-const Menu = () => {
+const Menu = ({ users, amount }) => {
   const pathname = usePathname();
   // eslint-disable-next-line no-unused-vars
   const [value, setValue] = useLocalStorage('userData', '');
@@ -56,7 +57,7 @@ const Menu = () => {
               </div>
               <div>
                 <p>Usuarios</p>
-                <p className="font-light">8 registrados</p>
+                <p className="font-light">{amount} registrados</p>
               </div>
             </div>
           </Link>
@@ -72,7 +73,7 @@ const Menu = () => {
             </div>
           </Link>
           <Link href={'/admin'}>
-            <div className="flex gap-4 items-center">
+            <div className="flex gap-4 items-center opacity-50">
               <div className={pathname === '/admin/settings' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
                 <Cog6ToothIcon className="w-8 h-8" />
               </div>
@@ -84,7 +85,7 @@ const Menu = () => {
         </div>
 
         <div className="w-full flex flex-col items-center">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 opacity-50">
             <InformationCircleIcon className="h-6 w-6" />
             <p>Inbox</p>
           </div>
@@ -140,7 +141,7 @@ const Menu = () => {
             </div>
           </Link>
           <Link href={'/monitor'}>
-            <div className="flex gap-4 items-center">
+            <div className="flex gap-4 items-center opacity-50">
               <div className={pathname === '/monitor/settings' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
                 <Cog6ToothIcon className="w-8 h-8" />
               </div>
@@ -152,7 +153,7 @@ const Menu = () => {
         </div>
 
         <div className="w-full flex flex-col items-center">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 opacity-50">
             <InformationCircleIcon className="h-6 w-6" />
             <p>Inbox</p>
           </div>
@@ -186,16 +187,14 @@ const Menu = () => {
         </div>
 
         <div className="flex flex-col gap-8">
-          <Link href={'/user/profile'}>
-            <div className="flex gap-4 items-center">
-              <div className={pathname === '/user/profile' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
-                <UserIcon className="w-8 h-8" />
-              </div>
-              <div>
-                <p>Perfil</p>
-              </div>
+          <div className="flex gap-4 items-center opacity-50">
+            <div className={pathname === '/user/profile' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
+              <UserIcon className="w-8 h-8" />
             </div>
-          </Link>
+            <div>
+              <p>Perfil</p>
+            </div>
+          </div>
           <Link href={'/user'}>
             <div className="flex gap-4 items-center">
               <div className={pathname === '/user' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
@@ -209,7 +208,7 @@ const Menu = () => {
         </div>
 
         <div className="w-full flex flex-col items-center">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 opacity-50">
             <InformationCircleIcon className="h-6 w-6" />
             <p>Inbox</p>
           </div>
@@ -288,7 +287,7 @@ const NavMobiile = () => {
               </div>
             </Link>
             <Link href={'/admin'} onClick={() => handleClick()}>
-              <div className="flex gap-4 items-center">
+              <div className="flex gap-4 items-center opacity-50">
                 <div className={pathname === '/admin/settings' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
                   <Cog6ToothIcon className="w-8 h-8" />
                 </div>
@@ -300,7 +299,7 @@ const NavMobiile = () => {
           </div>
 
           <div className="w-full flex flex-col items-center">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 opacity-50">
               <InformationCircleIcon className="h-6 w-6" />
               <p>Inbox</p>
             </div>
@@ -360,7 +359,7 @@ const NavMobiile = () => {
               </div>
             </Link>
             <Link href={'/monitor'} onClick={() => handleClick()}>
-              <div className="flex gap-4 items-center">
+              <div className="flex gap-4 items-center opacity-50">
                 <div className={pathname === '/monitor/settings' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
                   <Cog6ToothIcon className="w-8 h-8" />
                 </div>
@@ -372,7 +371,7 @@ const NavMobiile = () => {
           </div>
 
           <div className="w-full flex flex-col items-center">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 opacity-50">
               <InformationCircleIcon className="h-6 w-6" />
               <p>Inbox</p>
             </div>
@@ -411,7 +410,7 @@ const NavMobiile = () => {
 
           <div className="flex flex-col gap-8">
             <Link href={'/user/profile'} onClick={() => handleClick()}>
-              <div className="flex gap-4 items-center">
+              <div className="flex gap-4 items-center opacity-50">
                 <div className={pathname === '/user/profile' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
                   <UserIcon className="w-8 h-8" />
                 </div>
@@ -430,10 +429,20 @@ const NavMobiile = () => {
                 </div>
               </div>
             </Link>
+            <Link href={'/user/scanner'} onClick={() => handleClick()}>
+              <div className="flex gap-4 items-center">
+                <div className={pathname === '/user/scanner' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
+                  <CameraIcon className="w-8 h-8" />
+                </div>
+                <div>
+                  <p>Escanear QR</p>
+                </div>
+              </div>
+            </Link>
           </div>
 
           <div className="w-full flex flex-col items-center">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 opacity-50">
               <InformationCircleIcon className="h-6 w-6" />
               <p>Inbox</p>
             </div>

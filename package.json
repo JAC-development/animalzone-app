@@ -13,6 +13,7 @@
   "dependencies": {
     "@emotion/react": "^11.11.0",
     "@heroicons/react": "^2.0.18",
+    "@react-pdf/renderer": "^3.1.12",
     "@yudiel/react-qr-scanner": "^1.1.9",
     "autoprefixer": "10.4.14",
     "axios": "^1.4.0",

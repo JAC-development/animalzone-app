@@ -1,5 +1,5 @@
 'use client';
-import { getFirestore, collection, query, getDocs, where, addDoc, setDoc, doc, getDoc } from 'firebase/firestore';
+import { getFirestore, collection, query, getDocs, where, addDoc, setDoc, doc, getDoc, deleteDoc } from 'firebase/firestore';
 import { app } from 'firebaseConfig';
 import bcrypt from 'bcryptjs';
 
@@ -26,6 +26,19 @@ export default async function handleGetData(email, password) {
     }
   } else {
     return false;
+  }
+}
+
+export async function handleDeleteData(data) {
+  console.log(data);
+  if (data) {
+    await deleteDoc(doc(firestore, 'usuarios', data))
+      .then(() => {
+        console.log('user deleted');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 }
 
@@ -112,6 +125,19 @@ export async function handleGetAllData() {
     id: doc.id,
     ...doc.data(),
   }));
+
+  return data;
+}
+
+export async function handleGetUserDates(ref) {
+  const snapshot = await getDocs(collection(firestore, 'attendance', ref, 'history'));
+
+  const data = snapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+
+  console.log(data);
 
   return data;
 }
