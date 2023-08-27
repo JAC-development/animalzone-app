@@ -1,6 +1,70 @@
+'use client';
 import { ArrowLeftCircleIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { FunnelIcon, PrinterIcon } from '@heroicons/react/24/solid';
 import { PDFDownloadLink, Document, Page, StyleSheet, View, Text } from '@react-pdf/renderer';
+import { DocTemplateAttendance } from '@components/DocTemplate';
+// Document style for PDF
+const styles = StyleSheet.create({
+  body: {
+    paddingTop: 35,
+    paddingBottom: 65,
+    paddingHorizontal: 35,
+  },
+  table: {
+    display: 'table',
+    width: 'auto',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderRightWidth: 0,
+    borderBottomWidth: 0,
+  },
+  tableRow: {
+    margin: 'auto',
+    flexDirection: 'row',
+  },
+  tableCol: {
+    width: '20%',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderLeftWidth: 0,
+    borderTopWidth: 0,
+  },
+  tableCell: {
+    margin: 'auto',
+    marginTop: 5,
+    fontSize: 14,
+  },
+});
+
+// Function to generate PDF
+const generatePDF = () => (
+  <Document>
+    <Page size="A4" style={styles.body}>
+      <View style={styles.table}>
+        <View style={styles.tableRow}>
+          <View style={styles.tableCol}>
+            <Text style={styles.tableCell}>Nombre</Text>
+          </View>
+          <View style={styles.tableCol}>
+            <Text style={styles.tableCell}>Apellido</Text>
+          </View>
+          <View style={styles.tableCol}>
+            <Text style={styles.tableCell}>Registro</Text>
+          </View>
+          <View style={styles.tableCol}>
+            <Text style={styles.tableCell}>Horas adicionales</Text>
+          </View>
+          <View style={styles.tableCol}>
+            <Text style={styles.tableCell}>Tiempo</Text>
+          </View>
+        </View>
+      </View>
+      <View>
+        <DocTemplateAttendance />
+      </View>
+    </Page>
+  </Document>
+);
 
 export default function AttendanceViewAdmin() {
   return (
@@ -22,10 +86,13 @@ export default function AttendanceViewAdmin() {
       {/* Menu section for filters and actions */}
       <div className="grid grid-cols-4 md:grid-cols-8 grid-rows-2 md:grid-rows-1 gap-4 mt-12 mb-4 md:mb-12">
         <input type="text" placeholder="Search" className="col-span-3 md:col-span-3 md:col-start-1 border-2 rounded-full border-black px-4 py-2" />
-        <button className="col-span-1 md:col-start-8 bg-yellow-400 p-3 rounded-full font-bold flex items-center justify-center">
+        <PDFDownloadLink
+          document={generatePDF()}
+          fileName="asistencias.pdf"
+          className="col-span-1 md:col-start-9 bg-yellow-400 hover:bg-yellow-600 p-3 rounded-full font-bold flex items-center justify-center"
+        >
           <PrinterIcon className="w-5 h-5 mx-auto" />
-          {/* {currentWidth > 640 ? <span>Print</span> : <></>} */}
-        </button>
+        </PDFDownloadLink>
         <button className="row-start-2 md:row-start-1 col-span-2 md:col-span-2 md:col-start-4 mr-auto flex gap-2 items-center font-bold">
           <span>
             <FunnelIcon className="w-5 h-5" />
