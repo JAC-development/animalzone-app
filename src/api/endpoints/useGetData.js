@@ -1,5 +1,5 @@
 'use client';
-import { getFirestore, collection, query, getDocs, where, addDoc, deleteDoc } from 'firebase/firestore';
+import { getFirestore, collection, query, getDocs, where, addDoc, setDoc, doc, getDoc, deleteDoc } from 'firebase/firestore';
 import { app } from 'firebaseConfig';
 import bcrypt from 'bcryptjs';
 

@@ -30,8 +30,6 @@ const UserRow = ({ data }) => {
   const [refTime, setRefTime] = useState();
   useEffect(() => {
     const date = new Date(data.date.seconds * 1000);
-    console.log(date);
-    console.log(date.getFullYear());
     setRefDay(date.getDay());
     setRefMonth(date.getMonth());
     setRefYear(date.getFullYear());
