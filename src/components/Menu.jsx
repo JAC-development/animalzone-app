@@ -5,6 +5,7 @@ import Link from 'next/link';
 import 'firebaseConfig';
 import Cookies from 'js-cookie';
 import { usePathname, useRouter } from 'next/navigation';
+import { useLocalStorage } from 'hooks/useLocalStorage';
 import { AuthContext } from 'hooks/useAuth';
 import { useState, useContext } from 'react';
 import { Slide } from 'react-awesome-reveal';
@@ -16,12 +17,15 @@ const profile = 'https://picsum.photos/200/300';
 
 const Menu = ({ users, amount }) => {
   const pathname = usePathname();
+  // eslint-disable-next-line no-unused-vars
+  const [value, setValue] = useLocalStorage('userData', '');
   const route = useRouter();
   const { userData, setUserData } = useContext(AuthContext);
 
   const logOut = () => {
     Cookies.remove('signIn');
-    setUserData('Without user');
+    setUserData('');
+    setValue('');
     route.push('/');
   };
 
@@ -108,7 +112,7 @@ const Menu = ({ users, amount }) => {
               <Image src={profile} width={100} height={100} alt="profile image" />
             </div>
             <div>
-              <h2>{userData.username}</h2>
+              <h2>{userData.name}</h2>
               <p className="font-light">{userData.rol}</p>
             </div>
           </div>
@@ -176,7 +180,7 @@ const Menu = ({ users, amount }) => {
               <Image src={profile} width={100} height={100} alt="profile image" />
             </div>
             <div>
-              <h2>{userData.username}</h2>
+              <h2>{userData.name}</h2>
               <p className="font-light">{userData.rol}</p>
             </div>
           </div>
@@ -222,6 +226,8 @@ const Menu = ({ users, amount }) => {
 const NavMobiile = () => {
   const pathname = usePathname();
   const [click, setClick] = useState(false);
+  // eslint-disable-next-line no-unused-vars
+  const [value, setValue] = useLocalStorage('userData', '');
   const route = useRouter();
   let slide = null;
   const { userData, setUserData } = useContext(AuthContext);
@@ -232,7 +238,8 @@ const NavMobiile = () => {
 
   const logOut = () => {
     Cookies.remove('signIn');
-    setUserData('Without user');
+    setUserData('');
+    setValue('');
     route.push('/');
   };
 
@@ -250,7 +257,7 @@ const NavMobiile = () => {
                 <Image src={profile} width={100} height={100} alt="profile image" />
               </div>
               <div>
-                <h2>{userData.username}</h2>
+                <h2>{userData.name}</h2>
                 <p className="font-light">{userData.rol}</p>
               </div>
             </div>
@@ -323,7 +330,7 @@ const NavMobiile = () => {
                 <Image src={profile} width={100} height={100} alt="profile image" />
               </div>
               <div>
-                <h2>{userData.username}</h2>
+                <h2>{userData.name}</h2>
                 <p className="font-light">{userData.rol}</p>
               </div>
             </div>
@@ -395,7 +402,7 @@ const NavMobiile = () => {
                 <Image src={profile} width={100} height={100} alt="profile image" />
               </div>
               <div>
-                <h2>{userData.username}</h2>
+                <h2>{userData.name}</h2>
                 <p className="font-light">{userData.rol}</p>
               </div>
             </div>
