@@ -58,7 +58,7 @@ export default function Home() {
   };
 
   return (
-    <main className="h-screen w-full flex items-center justify-center">
+    <main className="h-screen w-10/12 mx-auto sm:w-full flex items-center justify-center">
       <div className="w-auto max-w-md text-center">
         <div className="flex justify-center">
           <Image src={logo} width={'auto'} height={'auto'} alt="logo" />
