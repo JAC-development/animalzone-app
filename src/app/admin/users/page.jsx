@@ -10,7 +10,7 @@ import bcrypt from 'bcryptjs';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { PDFDownloadLink, Document, Page, StyleSheet, View, Text } from '@react-pdf/renderer';
-import DocTemplate from '@components/DocTemplate';
+import { DocTemplateUsers } from '@components/DocTemplate';
 
 // Document style for PDF
 const styles = StyleSheet.create({
@@ -108,7 +108,7 @@ export default function AdminUsers() {
     const userArray = await handleGetAllData();
     console.log(userArray);
     const userList = userArray.map((user) => <AdvanceRow data={user} del={handleDeleteUser} edit={handleEditUser} key={user.id} />);
-    setDocData(DocTemplate(userArray));
+    setDocData(DocTemplateUsers(userArray));
     setTableData(userList);
   };
 

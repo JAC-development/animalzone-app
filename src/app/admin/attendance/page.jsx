@@ -1,5 +1,6 @@
 import { ArrowLeftCircleIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { FunnelIcon, PrinterIcon } from '@heroicons/react/24/solid';
+import { PDFDownloadLink, Document, Page, StyleSheet, View, Text } from '@react-pdf/renderer';
 
 export default function AttendanceViewAdmin() {
   return (

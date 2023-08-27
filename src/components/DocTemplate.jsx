@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function DocTemplate(data) {
+const DocTemplateUsers = (data) => {
   const Rows = data.map((user) => (
     <View style={styles.table} key={user.id}>
       <View style={styles.tableRow}>
@@ -48,4 +48,28 @@ export default function DocTemplate(data) {
     </View>
   ));
   return Rows;
-}
+};
+
+const DocTemplateAttendance = (data) => {
+  const Rows = data.map((user) => (
+    <View style={styles.table} key={user.id}>
+      <View style={styles.tableRow}>
+        <View style={styles.tableCol}>
+          <Text style={styles.tableCell}>{user.name}</Text>
+        </View>
+        <View style={styles.tableCol}>
+          <Text style={styles.tableCell}>{user.surname}</Text>
+        </View>
+        <View style={styles.tableCol}>
+          <Text style={styles.tableCell}>{user.email}</Text>
+        </View>
+        <View style={styles.tableCol}>
+          <Text style={styles.tableCell}>{user.rol}</Text>
+        </View>
+      </View>
+    </View>
+  ));
+  return Rows;
+};
+
+export { DocTemplateUsers, DocTemplateAttendance };
