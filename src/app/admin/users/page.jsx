@@ -9,6 +9,41 @@ import { handleGetAllData, handleDeleteData, handleAddData, handleModifyData } f
 import bcrypt from 'bcryptjs';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { PDFDownloadLink, Document, Page, StyleSheet, View, Text } from '@react-pdf/renderer';
+import DocTemplate from '@components/DocTemplate';
+
+// Document style for PDF
+const styles = StyleSheet.create({
+  body: {
+    paddingTop: 35,
+    paddingBottom: 65,
+    paddingHorizontal: 35,
+  },
+  table: {
+    display: 'table',
+    width: 'auto',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderRightWidth: 0,
+    borderBottomWidth: 0,
+  },
+  tableRow: {
+    margin: 'auto',
+    flexDirection: 'row',
+  },
+  tableCol: {
+    width: '25%',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderLeftWidth: 0,
+    borderTopWidth: 0,
+  },
+  tableCell: {
+    margin: 'auto',
+    marginTop: 5,
+    fontSize: 17,
+  },
+});
 
 export default function AdminUsers() {
   const [show, setShow] = useState(false);
@@ -17,6 +52,7 @@ export default function AdminUsers() {
   const [userSurname, setUserSurname] = useState(null);
   const [userEmail, setUserEmail] = useState(null);
   const [tableData, setTableData] = useState(null);
+  const [docData, setDocData] = useState([]);
   const [search, setSearch] = useState('');
   const form = useRef(null);
 
@@ -72,6 +108,7 @@ export default function AdminUsers() {
     const userArray = await handleGetAllData();
     console.log(userArray);
     const userList = userArray.map((user) => <AdvanceRow data={user} del={handleDeleteUser} edit={handleEditUser} key={user.id} />);
+    setDocData(DocTemplate(userArray));
     setTableData(userList);
   };
 
@@ -113,6 +150,31 @@ export default function AdminUsers() {
     }
   };
 
+  // Function to generate PDF
+  const generatePDF = () => (
+    <Document>
+      <Page size="A4" style={styles.body}>
+        <View style={styles.table}>
+          <View style={styles.tableRow}>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>Nombre</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>Apellido</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>Correo</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>Función</Text>
+            </View>
+          </View>
+        </View>
+        <View>{docData}</View>
+      </Page>
+    </Document>
+  );
+
   return (
     <div className="px-8 py-12 lg:px-14 xl:px-24 lg:pt-24 w-full">
       {/* Go back section on top */}
@@ -133,10 +195,13 @@ export default function AdminUsers() {
       {/* Menu section for filters and actions */}
       <div className="grid grid-cols-4 md:grid-cols-9 grid-rows-2 md:grid-rows-1 gap-4 mt-12 mb-4 md:mb-12">
         {/* <input type="text" placeholder="Search" className="col-span-3 md:col-span-3 md:col-start-1 border-2 rounded-full border-black px-4 py-2" /> */}
-        <button className="col-span-1 md:col-start-9 bg-yellow-400 hover:bg-yellow-600 p-3 rounded-full font-bold flex items-center justify-center">
+        <PDFDownloadLink
+          document={generatePDF()}
+          fileName="usuarios.pdf"
+          className="col-span-1 md:col-start-9 bg-yellow-400 hover:bg-yellow-600 p-3 rounded-full font-bold flex items-center justify-center"
+        >
           <PrinterIcon className="w-5 h-5 mx-auto" />
-          {/* {currentWidth > 640 ? <span>Print</span> : <></>} */}
-        </button>
+        </PDFDownloadLink>
         {/* <button className="row-start-2 md:row-start-1 hover:bg-gray-300 py-2 px-5 rounded-full col-span-2 md:col-span-2 md:col-start-4 mr-auto flex gap-2 items-center font-bold">
           <span>
             <FunnelIcon className="w-5 h-5" />
