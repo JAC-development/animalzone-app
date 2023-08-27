@@ -4,6 +4,8 @@ import { useContext, useRef, useState } from 'react';
 import { AuthContext } from 'hooks/useAuth';
 import { useRouter } from 'next/navigation';
 import handleGetData from 'api/endpoints/useGetData';
+import { useLocalStorage } from 'hooks/useLocalStorage';
+// import { handleGetUserDates } from 'api/endpoints/useGetData';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
@@ -17,6 +19,8 @@ import logo from '@logos/primary-logo.png';
 export default function Home() {
   const [user, setUser] = useState('');
   const [pass, setPass] = useState('');
+  // eslint-disable-next-line no-unused-vars
+  const [value, setValue] = useLocalStorage('userData', '');
   const form = useRef(null);
   const route = useRouter();
   const { setUserData } = useContext(AuthContext);
@@ -46,6 +50,7 @@ export default function Home() {
       .then((res) => {
         if (res) {
           const response = login(data.email, res.rol);
+          setValue(res);
           setUserData(res);
           route.push(`/${response}`);
         } else {
@@ -99,7 +104,6 @@ export default function Home() {
             </button>
           </div>
         </form>
-
         <div className="my-4">
           <Link className="font-bold text-slate-500" href="#">
             Forgot your password?
