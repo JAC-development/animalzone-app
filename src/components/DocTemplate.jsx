@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   tableCol: {
-    width: '25%',
+    width: '20%',
     borderStyle: 'solid',
     borderWidth: 1,
     borderLeftWidth: 0,
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function DocTemplate(data) {
+const DocTemplateUsers = (data) => {
   const Rows = data.map((user) => (
     <View style={styles.table} key={user.id}>
       <View style={styles.tableRow}>
@@ -48,4 +48,31 @@ export default function DocTemplate(data) {
     </View>
   ));
   return Rows;
-}
+};
+
+const DocTemplateAttendance = () => {
+  const Rows = (
+    <View style={styles.table}>
+      <View style={styles.tableRow}>
+        <View style={styles.tableCol}>
+          <Text style={styles.tableCell}>Miriam</Text>
+        </View>
+        <View style={styles.tableCol}>
+          <Text style={styles.tableCell}>Rodriguez</Text>
+        </View>
+        <View style={styles.tableCol}>
+          <Text style={styles.tableCell}>14 asistencias</Text>
+        </View>
+        <View style={styles.tableCol}>
+          <Text style={styles.tableCell}>+2 horas</Text>
+        </View>
+        <View style={styles.tableCol}>
+          <Text style={styles.tableCell}>09:04 AM</Text>
+        </View>
+      </View>
+    </View>
+  );
+  return Rows;
+};
+
+export { DocTemplateUsers, DocTemplateAttendance };
