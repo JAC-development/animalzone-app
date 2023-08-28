@@ -43,8 +43,8 @@ const Menu = ({ users, amount }) => {
               <Image src={profile} width={100} height={100} alt="profile image" />
             </div>
             <div>
-              <h2>{userData.name}</h2>
-              <p className="font-light">{userData.rol}</p>
+              <h2>{userData?.name || '--'}</h2>
+              <p className="font-light">{userData?.rol || 'rol'}</p>
             </div>
           </div>
         </div>
@@ -112,8 +112,8 @@ const Menu = ({ users, amount }) => {
               <Image src={profile} width={100} height={100} alt="profile image" />
             </div>
             <div>
-              <h2>{userData.name}</h2>
-              <p className="font-light">{userData.rol}</p>
+              <h2>{userData?.name || '--'}</h2>
+              <p className="font-light">{userData?.rol || 'rol'}</p>
             </div>
           </div>
         </div>
@@ -180,8 +180,8 @@ const Menu = ({ users, amount }) => {
               <Image src={profile} width={100} height={100} alt="profile image" />
             </div>
             <div>
-              <h2>{userData.name}</h2>
-              <p className="font-light">{userData.rol}</p>
+              <h2>{userData?.name || '--'}</h2>
+              <p className="font-light">{userData?.rol || 'rol'}</p>
             </div>
           </div>
         </div>
@@ -257,8 +257,8 @@ const NavMobiile = () => {
                 <Image src={profile} width={100} height={100} alt="profile image" />
               </div>
               <div>
-                <h2>{userData.name}</h2>
-                <p className="font-light">{userData.rol}</p>
+                <h2>{userData?.name || '--'}</h2>
+                <p className="font-light">{userData?.rol || 'rol'}</p>
               </div>
             </div>
           </div>
@@ -330,8 +330,8 @@ const NavMobiile = () => {
                 <Image src={profile} width={100} height={100} alt="profile image" />
               </div>
               <div>
-                <h2>{userData.name}</h2>
-                <p className="font-light">{userData.rol}</p>
+                <h2>{userData?.name || '--'}</h2>
+                <p className="font-light">{userData?.rol || 'rol'}</p>
               </div>
             </div>
           </div>
@@ -402,8 +402,8 @@ const NavMobiile = () => {
                 <Image src={profile} width={100} height={100} alt="profile image" />
               </div>
               <div>
-                <h2>{userData.name}</h2>
-                <p className="font-light">{userData.rol}</p>
+                <h2>{userData?.name || '--'}</h2>
+                <p className="font-light">{userData?.rol || 'rol'}</p>
               </div>
             </div>
           </div>
@@ -472,7 +472,7 @@ const NavMobiile = () => {
   return (
     <header className="h-1/6 flex lg:hidden justify-between items-center p-8">
       <div>
-        <Link href={`/${userData.rol}`}>
+        <Link href={`/${userData?.rol || 'rol'}`}>
           <Image src={logo} width={100} height={100} alt="logo" />
         </Link>
       </div>

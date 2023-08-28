@@ -1,9 +1,12 @@
+'use client';
 import { useState, useEffect } from 'react';
 
 function getStorageValue(key, defaultValue) {
-  const saved = localStorage.getItem(key);
-  const initialValue = JSON.parse(saved);
-  return initialValue || defaultValue;
+  if (typeof window !== 'undefined') {
+    const saved = localStorage.getItem(key);
+    const initialValue = JSON.parse(saved);
+    return initialValue || defaultValue;
+  }
 }
 
 export const useLocalStorage = (key, defaultValue) => {
