@@ -190,13 +190,15 @@ export default function AttendanceViewAdmin() {
               Buscar
             </button>
           )}
-          <PDFDownloadLink
-            document={generatePDF()}
-            fileName="usuarios.pdf"
-            className="col-span-2 row-start-3 md:row-start-1 md:col-start-9 2xl:col-span-1 2xl:col-start-9 bg-yellow-400 hover:bg-yellow-600 p-3 rounded-full font-bold flex items-center justify-center"
-          >
-            <PrinterIcon className="w-5 h-5 mx-auto" />
-          </PDFDownloadLink>
+          {iseClient && (
+            <PDFDownloadLink
+              document={generatePDF()}
+              fileName="usuarios.pdf"
+              className="col-span-2 row-start-3 md:row-start-1 md:col-start-9 2xl:col-span-1 2xl:col-start-9 bg-yellow-400 hover:bg-yellow-600 p-3 rounded-full font-bold flex items-center justify-center"
+            >
+              <PrinterIcon className="w-5 h-5 mx-auto" />
+            </PDFDownloadLink>
+          )}
         </form>
       </div>
       {/* Table for users data */}

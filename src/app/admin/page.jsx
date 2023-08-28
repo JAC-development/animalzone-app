@@ -1,6 +1,6 @@
 'use client';
 import { ChevronRightIcon, EllipsisHorizontalCircleIcon } from '@heroicons/react/24/solid';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { AuthContext } from 'hooks/useAuth';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -8,6 +8,11 @@ export default function Admin() {
   const show = true;
   const [openTab, setOpenTab] = useState('viewUsers');
   const { userData } = useContext(AuthContext);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   return (
     <div className="px-8 pb-16 pt-24 lg:px-14 xl:px-24 flex flex-col justify-between">
@@ -16,7 +21,7 @@ export default function Admin() {
         {/* Welcome message */}
         <div>
           <p className="text-gray-400">ANIMAL ZONE</p>
-          <p className="text-5xl py-2">Hola, {userData.name}!</p>
+          <p className="text-5xl py-2">Hola, {isClient ? userData.name : ''}!</p>
           <p className="text-gray-400">Administrador</p>
         </div>
 

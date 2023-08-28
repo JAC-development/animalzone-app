@@ -8,7 +8,7 @@ import Cookies from 'js-cookie';
 import { usePathname, useRouter } from 'next/navigation';
 import { useLocalStorage } from 'hooks/useLocalStorage';
 import { AuthContext } from 'hooks/useAuth';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { Slide } from 'react-awesome-reveal';
 import { Bars3Icon, UserIcon, ClockIcon, DocumentTextIcon, Cog6ToothIcon, InformationCircleIcon, ArrowRightOnRectangleIcon, XMarkIcon, CameraIcon } from '@heroicons/react/24/outline';
 
@@ -22,6 +22,11 @@ const Menu = ({ users, amount }) => {
   const [value, setValue] = useLocalStorage('userData', '');
   const route = useRouter();
   const { userData, setUserData } = useContext(AuthContext);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const logOut = () => {
     Cookies.remove('signIn');
@@ -44,7 +49,7 @@ const Menu = ({ users, amount }) => {
               <Image src={profile} width={100} height={100} alt="profile image" />
             </div>
             <div>
-              <h2>{userData.name}</h2>
+              {isClient ? <h2>{userData.name}</h2> : <h2>Usuario</h2>}
               <p className="font-light">Administrador</p>
             </div>
           </div>
@@ -113,7 +118,7 @@ const Menu = ({ users, amount }) => {
               <Image src={profile} width={100} height={100} alt="profile image" />
             </div>
             <div>
-              <h2>{userData.name}</h2>
+              {isClient ? <h2>{userData.name}</h2> : <h2>Usuario</h2>}
               <p className="font-light">Monitor</p>
             </div>
           </div>
@@ -181,7 +186,7 @@ const Menu = ({ users, amount }) => {
               <Image src={profile} width={100} height={100} alt="profile image" />
             </div>
             <div>
-              <h2 className="capitalize">{userData.name}</h2>
+              {isClient ? <h2>{userData.name}</h2> : <h2>Usuario</h2>}
               <p className="font-light">Usuario</p>
             </div>
           </div>
@@ -232,6 +237,11 @@ const NavMobiile = () => {
   const route = useRouter();
   let slide = null;
   const { userData, setUserData } = useContext(AuthContext);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const handleClick = () => {
     setClick(!click);
@@ -258,8 +268,8 @@ const NavMobiile = () => {
                 <Image src={profile} width={100} height={100} alt="profile image" />
               </div>
               <div>
-                <h2>{userData?.name || '--'}</h2>
-                <p className="font-light">{userData?.rol || 'rol'}</p>
+                {isClient ? <h2>{userData.name}</h2> : <h2>Usuario</h2>}
+                <p className="font-light">Administrador</p>
               </div>
             </div>
           </div>
@@ -331,8 +341,8 @@ const NavMobiile = () => {
                 <Image src={profile} width={100} height={100} alt="profile image" />
               </div>
               <div>
-                <h2>{userData?.name || '--'}</h2>
-                <p className="font-light">{userData?.rol || 'rol'}</p>
+                {isClient ? <h2>{userData.name}</h2> : <h2>Usuario</h2>}
+                <p className="font-light">Monitor</p>
               </div>
             </div>
           </div>
@@ -403,7 +413,7 @@ const NavMobiile = () => {
                 <Image src={profile} width={100} height={100} alt="profile image" />
               </div>
               <div>
-                <h2>{userData?.name || '--'}</h2>
+                {isClient ? <h2>{userData.name}</h2> : <h2>Usuario</h2>}
                 <p className="font-light">{userData?.rol || 'rol'}</p>
               </div>
             </div>
@@ -473,9 +483,13 @@ const NavMobiile = () => {
   return (
     <header className="h-1/6 flex lg:hidden justify-between items-center p-8">
       <div>
-        <Link href={`/${userData?.rol || 'rol'}`}>
+        {isClient ? (
+          <Link href={`/${userData.rol}`}>
+            <Image src={logo} width={100} height={100} alt="logo" />
+          </Link>
+        ) : (
           <Image src={logo} width={100} height={100} alt="logo" />
-        </Link>
+        )}
       </div>
       <button onClick={() => handleClick()}>
         <Bars3Icon className="h-10 w-10" />
