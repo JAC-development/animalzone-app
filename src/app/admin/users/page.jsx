@@ -12,6 +12,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { PDFDownloadLink, Document, Page, View, Text } from '@react-pdf/renderer';
 import { DocTemplateUsers } from '@components/DocTemplate';
 import { stylesUsers } from 'assets/PDF/pdfstyles';
+import { generate } from 'generate-password';
+import emailjs from '@emailjs/browser';
 
 export default function AdminUsers() {
   const [show, setShow] = useState(false);
@@ -97,7 +99,8 @@ export default function AdminUsers() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(form.current);
-    const pass = await bcrypt.hash('cisco', 10);
+    const randomPass = generate({ length: 8, numbers: false, uppercase: false });
+    const pass = await bcrypt.hash(randomPass, 10);
     const data = {
       name: formData.get('name'),
       surname: formData.get('surname'),
@@ -106,6 +109,16 @@ export default function AdminUsers() {
       pass: pass,
     };
     if (data.name != '' || data.email != '') {
+      emailjs.send(
+        'service_npa9q4e',
+        'template_xw45rp6',
+        {
+          to_name: data.name,
+          to_email: data.email,
+          message: randomPass,
+        },
+        'rT1rsJNDynflxXyPZ'
+      );
       if (await handleAddData({ name: data.name, surname: data.surname, email: data.email, rol: data.rol, password: data.pass })) {
         notifyError('Algo salio mal.');
         setShow(false);
