@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 'use client';
 import { useState, useEffect, useRef } from 'react';
 import { ArrowLeftCircleIcon } from '@heroicons/react/24/outline';
@@ -41,14 +42,14 @@ const generatePDF = () => (
 export default function AttendanceViewAdmin() {
   const [tableData, setTableData] = useState(null);
   const [userArray, setUserArray] = useState([]);
-  const [userSelected, setUserSelected] = useState();
-  const [currentYear, setCurrentYear] = useState();
+  const [userSelected, setUserSelected] = useState('empty');
+  const [currentYear, setCurrentYear] = useState('');
+  const [iseClient, setIsClient] = useState(false);
   const [docData, setDocData] = useState([]);
   const form = useRef(null);
 
   const fetchData = async () => {
-    const ft = await handleGetAllData();
-    setUserArray(ft);
+    setUserArray(await handleGetAllData());
     if (userSelected) {
       const userAttendanceArray = await handleGetUserDates(userSelected);
       const userList = userAttendanceArray.map((ref) => <AttendanceRow data={ref} id={userSelected} key={ref.id} />);
@@ -60,6 +61,7 @@ export default function AttendanceViewAdmin() {
   // Render the users list
   useEffect(() => {
     fetchData();
+    setIsClient(true);
     var dt = new Date();
     setCurrentYear(dt.getFullYear());
   }, []);
@@ -73,14 +75,12 @@ export default function AttendanceViewAdmin() {
       email: formData.get('uss'),
       year: formData.get('year'),
     };
-    const newUser = await handleNameToId(data.email);
-    setUserSelected(newUser);
 
     if (data.month === 'All') {
       fetchData();
     } else {
-      console.log('hey: ', userSelected);
       const newList = await handleGetUserDatesListPM(userSelected, `${data.month} ${data.year}`);
+
       const userList = newList.map((ref) => <AttendanceRow data={ref} id={userSelected} key={ref.id} />);
       setDocData(DocTemplateUsers(newList));
       setTableData(userList);
@@ -103,17 +103,23 @@ export default function AttendanceViewAdmin() {
           <p className="text-gray-400">Un resumen clasificado y revisado.</p>
         </div>
       </div>
-      <button onClick={async () => console.log(await handleGetUserDatesPM())}>get</button>
       {/* Menu section for filters and actions */}
       <div>
         <form id="new-form" className="grid grid-cols-4 md:grid-cols-9 grid-rows-3 md:grid-rows-1 gap-4 mt-12 mb-4 md:mb-12" ref={form} onSubmit={handleSubmit}>
           {/* <input type="text" placeholder="Search" className="col-span-3 md:col-span-3 md:col-start-1 border-2 rounded-full border-black px-4 py-2" /> */}
-          <select name="uss" defaultValue={''} className="row-start-2 md:row-start-1 col-span-4 md:col-span-3 md:col-start-1 outline-none border-2 border-gray-400 rounded-full py-3 px-6">
-            {userArray.map((user) => (
-              <option className="capitalize" value={user.email} key={user.id}>
-                {user.name} {user.surname} ({user.email})
-              </option>
-            ))}
+          <select
+            name="uss"
+            onChange={(e) => setUserSelected(e.target.value)}
+            defaultValue={'hola'}
+            className="row-start-2 md:row-start-1 col-span-4 md:col-span-3 md:col-start-1 outline-none border-2 border-gray-400 rounded-full py-3 px-6"
+          >
+            <option value="empty">Usuario</option>
+            {iseClient &&
+              userArray.map((user) => (
+                <option className="capitalize" value={user?.id} key={user.id}>
+                  {user.name} {user.surname} ({user.email})
+                </option>
+              ))}
             ;
           </select>
           <select name="month" defaultValue={'All'} className="row-start-1 md:row-start-1 col-span-2 md:col-span-2 md:col-start-4 outline-none border-2 border-gray-400 rounded-full py-3 px-6">
@@ -168,19 +174,31 @@ export default function AttendanceViewAdmin() {
               {currentYear + 1}
             </option>
           </select>
-          <button
-            type="submit"
-            className="row-start-3 md:row-start-1 col-span-2 2xl:col-span-1 md:col-start-8 text-white bg-gray-700 hover:bg-gray-900 p-3 rounded-full font-bold flex items-center justify-center"
-          >
-            Buscar
-          </button>
-          <PDFDownloadLink
-            document={generatePDF()}
-            fileName="usuarios.pdf"
-            className="col-span-2 row-start-3 md:row-start-1 md:col-start-9 2xl:col-span-1 2xl:col-start-9 bg-yellow-400 hover:bg-yellow-600 p-3 rounded-full font-bold flex items-center justify-center"
-          >
-            <PrinterIcon className="w-5 h-5 mx-auto" />
-          </PDFDownloadLink>
+          {userSelected === 'empty' ? (
+            <button
+              disabled
+              type="submit"
+              className="row-start-3 md:row-start-1 col-span-2 2xl:col-span-1 md:col-start-8 disabled:bg-slate-300 text-white bg-gray-700 hover:bg-gray-900 p-3 rounded-full font-bold flex items-center justify-center"
+            >
+              Buscar
+            </button>
+          ) : (
+            <button
+              type="submit"
+              className="row-start-3 md:row-start-1 col-span-2 2xl:col-span-1 md:col-start-8 disabled:bg-slate-300 text-white bg-gray-700 hover:bg-gray-900 p-3 rounded-full font-bold flex items-center justify-center"
+            >
+              Buscar
+            </button>
+          )}
+          {iseClient && (
+            <PDFDownloadLink
+              document={generatePDF()}
+              fileName="usuarios.pdf"
+              className="col-span-2 row-start-3 md:row-start-1 md:col-start-9 2xl:col-span-1 2xl:col-start-9 bg-yellow-400 hover:bg-yellow-600 p-3 rounded-full font-bold flex items-center justify-center"
+            >
+              <PrinterIcon className="w-5 h-5 mx-auto" />
+            </PDFDownloadLink>
+          )}
         </form>
       </div>
       {/* Table for users data */}

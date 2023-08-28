@@ -1,66 +1,19 @@
 'use client';
-import { getFirestore, collection, query, onSnapshot } from 'firebase/firestore';
-import { app } from 'firebaseConfig';
 import { ChevronRightIcon, EllipsisHorizontalCircleIcon } from '@heroicons/react/24/solid';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { AuthContext } from 'hooks/useAuth';
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { handleIdToName } from 'api/endpoints/useGetData';
-
-// get the firestore
-const firestore = getFirestore(app);
 
 export default function Admin() {
   const show = true;
   const [openTab, setOpenTab] = useState('viewUsers');
   const { userData } = useContext(AuthContext);
-  const id = 'animalzone';
+  const [isClient, setIsClient] = useState(false);
 
-  const notifyIn = (text) => {
-    toast.success(text, {
-      position: 'bottom-right',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
-      toastId: id,
-      icon: false,
-      progress: undefined,
-      theme: 'colored',
-    });
-    toast.clearWaitingQueue();
-  };
-  const notifyOut = (text) => {
-    toast.error(text, {
-      position: 'bottom-right',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
-      toastId: id,
-      icon: false,
-      progress: undefined,
-      theme: 'colored',
-    });
-    toast.clearWaitingQueue();
-  };
-  const q = query(collection(firestore, 'attendance'));
-  onSnapshot(q, (snapshot) => {
-    snapshot.docChanges().forEach(async (change) => {
-      if (change.type === 'modified') {
-        const name = await handleIdToName(change.doc.id);
-        console.log(change.doc.data().status);
-        if (change.doc.data().status === 'entrada') {
-          notifyIn(`${name} ha llegado`);
-        } else {
-          notifyOut(`${name} ha salido`);
-        }
-      }
-    });
-  });
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   return (
     <div className="px-8 pb-16 pt-24 lg:px-14 xl:px-24 flex flex-col justify-between">
       {/* Main section */}
@@ -68,7 +21,7 @@ export default function Admin() {
         {/* Welcome message */}
         <div>
           <p className="text-gray-400">ANIMAL ZONE</p>
-          <p className="text-5xl py-2">Hola, {userData.name}!</p>
+          <p className="text-5xl py-2">Hola, {isClient ? userData.name : ''}!</p>
           <p className="text-gray-400">Administrador</p>
         </div>
 
@@ -185,7 +138,6 @@ export default function Admin() {
           </div>
         </div>
       </div>
-      <ToastContainer limit={1} />
     </div>
   );
 }
