@@ -5,7 +5,6 @@ import { AuthContext } from 'hooks/useAuth';
 import { useRouter } from 'next/navigation';
 import handleGetData from 'api/endpoints/useGetData';
 import { useLocalStorage } from 'hooks/useLocalStorage';
-// import { handleGetUserDates } from 'api/endpoints/useGetData';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
