@@ -24,31 +24,49 @@ const DocTemplateUsers = (data) => {
   return Rows;
 };
 
-const DocTemplateAttendance = () => {
-  const Rows = (
-    <View style={stylesRowAttendance.table}>
+const DocTemplateAttendance = (data) => {
+  const getHours = (docDdate) => {
+    const date = new Date(docDdate);
+    const hours = date.getHours();
+    const hours12 = hours % 12 || 12;
+    const minutes = date.getMinutes();
+    const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+    const refFullHour = `${hours12}:${formattedMinutes}`;
+    return refFullHour;
+  };
+
+  const getTime = (docDdate) => {
+    const date = new Date(docDdate);
+    const hours = date.getHours();
+    const refTime = hours >= 12 ? 'PM' : 'AM';
+
+    return refTime;
+  };
+  const Rows = data.map((user) => (
+    <View style={stylesRowAttendance.table} key={user.id}>
       <View style={stylesRowAttendance.tableRow}>
         <View style={stylesRowAttendance.tableCol}>
-          <Text style={stylesRowAttendance.tableCell}>Miriam</Text>
-        </View>
-        <View style={stylesRowAttendance.tableCol}>
-          <Text style={stylesRowAttendance.tableCell}>Rodriguez</Text>
+          <Text style={stylesRowAttendance.tableCell}>{user.user}</Text>
         </View>
         <View style={stylesRowAttendance.tableCol}>
           <Text style={stylesRowAttendance.tableCell}>Asistencia</Text>
         </View>
         <View style={stylesRowAttendance.tableCol}>
-          <Text style={stylesRowAttendance.tableCell}>Entrada</Text>
+          <Text style={stylesRowAttendance.tableCell}>{user.status}</Text>
         </View>
         <View style={stylesRowAttendance.tableCol}>
-          <Text style={stylesRowAttendance.tableCell}>28/08/2023</Text>
+          <Text style={stylesRowAttendance.tableCell}>
+            {new Date(user.date.seconds * 1000).getDate()}/{new Date(user.date.seconds * 1000).getMonth()}/{new Date(user.date.seconds * 1000).getFullYear()}
+          </Text>
         </View>
-        <View style={stylesRowAttendance.tableCol}>
-          <Text style={stylesRowAttendance.tableCell}>12:43 AM</Text>
+        <View style={stylesRowUserHistory.tableCol}>
+          <Text style={stylesRowUserHistory.tableCell}>
+            {getHours(user.date.seconds * 1000)} {getTime(user.date.seconds * 1000)}
+          </Text>
         </View>
       </View>
     </View>
-  );
+  ));
   return Rows;
 };
 

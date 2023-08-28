@@ -61,7 +61,7 @@ export const stylesAttendance = StyleSheet.create({
   tableCell: {
     margin: 'auto',
     marginTop: 5,
-    fontSize: 14,
+    fontSize: 12,
   },
 });
 
@@ -148,7 +148,7 @@ export const stylesRowAttendance = StyleSheet.create({
   tableCell: {
     margin: 'auto',
     marginTop: 5,
-    fontSize: 12,
+    fontSize: 10,
     padding: 10,
   },
 });
