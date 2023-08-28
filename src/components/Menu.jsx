@@ -14,7 +14,7 @@ import { Bars3Icon, UserIcon, ClockIcon, DocumentTextIcon, Cog6ToothIcon, Inform
 
 // images
 import logo from '@logos/primary-logo.png';
-const profile = 'https://picsum.photos/200/300';
+const profile = 'https://i.natgeofe.com/n/8abd6735-0002-4ac9-8385-9d5749a23e37/veiled-chameleon_square.jpg';
 
 const Menu = ({ users, amount }) => {
   const pathname = usePathname();
@@ -46,7 +46,7 @@ const Menu = ({ users, amount }) => {
 
           <div className="flex my-10 gap-6 items-center">
             <div className="w-16 h-16 rounded-full overflow-hidden">
-              <Image src={profile} width={100} height={100} alt="profile image" />
+              <img src={profile} className="w-[100px] h-[100px]" />
             </div>
             <div>
               {isClient ? <h2>{userData.name}</h2> : <h2>Usuario</h2>}
@@ -74,7 +74,6 @@ const Menu = ({ users, amount }) => {
               </div>
               <div>
                 <p>Asistencia</p>
-                <p className="font-light">1 Capturado</p>
               </div>
             </div>
           </Link>
@@ -115,7 +114,7 @@ const Menu = ({ users, amount }) => {
 
           <div className="flex my-10 gap-6 items-center">
             <div className="w-16 h-16 rounded-full overflow-hidden">
-              <Image src={profile} width={100} height={100} alt="profile image" />
+              <img src={profile} className="w-[100px] h-[100px]" />
             </div>
             <div>
               {isClient ? <h2>{userData.name}</h2> : <h2>Usuario</h2>}
@@ -132,7 +131,6 @@ const Menu = ({ users, amount }) => {
               </div>
               <div>
                 <p>Historial</p>
-                <p className="font-light">1 Capturado</p>
               </div>
             </div>
           </Link>
@@ -183,7 +181,7 @@ const Menu = ({ users, amount }) => {
 
           <div className="flex my-10 gap-6 items-center">
             <div className="w-16 h-16 rounded-full overflow-hidden">
-              <Image src={profile} width={100} height={100} alt="profile image" />
+              <img src={profile} className="w-[100px] h-[100px]" />
             </div>
             <div>
               {isClient ? <h2>{userData.name}</h2> : <h2>Usuario</h2>}
@@ -265,7 +263,7 @@ const NavMobiile = () => {
           <div className="flex justify-center">
             <div className="flex my-10 gap-6 items-center">
               <div className="w-16 h-16 rounded-full overflow-hidden">
-                <Image src={profile} width={100} height={100} alt="profile image" />
+                <img src={profile} className="w-[100px] h-[100px]" />
               </div>
               <div>
                 {isClient ? <h2>{userData.name}</h2> : <h2>Usuario</h2>}
@@ -338,7 +336,7 @@ const NavMobiile = () => {
           <div className="flex justify-center">
             <div className="flex my-10 gap-6 items-center">
               <div className="w-16 h-16 rounded-full overflow-hidden">
-                <Image src={profile} width={100} height={100} alt="profile image" />
+                <img src={profile} className="w-[100px] h-[100px]" />
               </div>
               <div>
                 {isClient ? <h2>{userData.name}</h2> : <h2>Usuario</h2>}
@@ -410,7 +408,7 @@ const NavMobiile = () => {
           <div className="flex justify-center">
             <div className="flex my-10 gap-6 items-center">
               <div className="w-16 h-16 rounded-full overflow-hidden">
-                <Image src={profile} width={100} height={100} alt="profile image" />
+                <img src={profile} className="w-[100px] h-[100px]" />
               </div>
               <div>
                 {isClient ? <h2>{userData.name}</h2> : <h2>Usuario</h2>}

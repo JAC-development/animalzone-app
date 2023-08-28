@@ -9,35 +9,6 @@ import { stylesAttendance } from 'assets/PDF/pdfstyles';
 import { AttendanceRow } from '@components/TableRow';
 import { DocTemplateUsers } from '@components/DocTemplate';
 import { handleGetUserDates, handleGetAllData, handleGetUserDatesPM, handleGetUserDatesListPM, handleNameToId } from 'api/endpoints/useGetData';
-// Function to generate PDF
-const generatePDF = () => (
-  <Document>
-    <Page size="A4" style={stylesAttendance.body}>
-      <View style={stylesAttendance.table}>
-        <View style={stylesAttendance.tableRow}>
-          <View style={stylesAttendance.tableCol}>
-            <Text style={stylesAttendance.tableCell}>Nombre</Text>
-          </View>
-          <View style={stylesAttendance.tableCol}>
-            <Text style={stylesAttendance.tableCell}>Apellido</Text>
-          </View>
-          <View style={stylesAttendance.tableCol}>
-            <Text style={stylesAttendance.tableCell}>Registro</Text>
-          </View>
-          <View style={stylesAttendance.tableCol}>
-            <Text style={stylesAttendance.tableCell}>Horas adicionales</Text>
-          </View>
-          <View style={stylesAttendance.tableCol}>
-            <Text style={stylesAttendance.tableCell}>Tiempo</Text>
-          </View>
-        </View>
-      </View>
-      <View>
-        <DocTemplateAttendance />
-      </View>
-    </Page>
-  </Document>
-);
 
 export default function AttendanceViewAdmin() {
   const [tableData, setTableData] = useState(null);
@@ -53,7 +24,7 @@ export default function AttendanceViewAdmin() {
     if (userSelected) {
       const userAttendanceArray = await handleGetUserDates(userSelected);
       const userList = userAttendanceArray.map((ref) => <AttendanceRow data={ref} id={userSelected} key={ref.id} />);
-      setDocData(DocTemplateUsers(userAttendanceArray));
+      setDocData(DocTemplateAttendance(userAttendanceArray));
       setTableData(userList);
     }
   };
@@ -87,6 +58,34 @@ export default function AttendanceViewAdmin() {
     }
   };
 
+  // Function to generate PDF
+  const generatePDF = () => (
+    <Document>
+      <Page size="A4" style={stylesAttendance.body}>
+        <View style={stylesAttendance.table}>
+          <View style={stylesAttendance.tableRow}>
+            <View style={stylesAttendance.tableCol}>
+              <Text style={stylesAttendance.tableCell}>Nombre completo</Text>
+            </View>
+            <View style={stylesAttendance.tableCol}>
+              <Text style={stylesAttendance.tableCell}>Registro</Text>
+            </View>
+            <View style={stylesAttendance.tableCol}>
+              <Text style={stylesAttendance.tableCell}>Tipo</Text>
+            </View>
+            <View style={stylesAttendance.tableCol}>
+              <Text style={stylesAttendance.tableCell}>Fecha</Text>
+            </View>
+            <View style={stylesAttendance.tableCol}>
+              <Text style={stylesAttendance.tableCell}>Hora</Text>
+            </View>
+          </View>
+        </View>
+        <View>{docData}</View>
+      </Page>
+    </Document>
+  );
+
   return (
     <div className="px-8 py-12 lg:px-14 xl:px-24 lg:pt-24 w-full max-h-screen overflow-y-scroll">
       {/* Go back section on top */}
@@ -117,7 +116,7 @@ export default function AttendanceViewAdmin() {
             {iseClient &&
               userArray.map((user) => (
                 <option className="capitalize" value={user?.id} key={user.id}>
-                  {user.name} {user.surname} ({user.email})
+                  {user.name} {user.surname} <strong>({user.email})</strong>
                 </option>
               ))}
             ;
@@ -163,7 +162,7 @@ export default function AttendanceViewAdmin() {
               Dicembre
             </option>
           </select>
-          <select name="year" defaultValue={currentYear} className="row-start-1 md:row-start-1 col-span-2 md:col-span-2 md:col-start-6 outline-none border-2 border-gray-400 rounded-full py-3 px-6">
+          <select name="year" defaultValue={currentYear} className="row-start-1 md:row-start-1 col-span-2 md:col-span-1 md:col-start-6 outline-none border-2 border-gray-400 rounded-full py-3 px-6">
             <option className="capitalize" value={currentYear - 1}>
               {currentYear - 1}
             </option>
@@ -178,14 +177,14 @@ export default function AttendanceViewAdmin() {
             <button
               disabled
               type="submit"
-              className="row-start-3 md:row-start-1 col-span-2 2xl:col-span-1 md:col-start-8 disabled:bg-slate-300 text-white bg-gray-700 hover:bg-gray-900 p-3 rounded-full font-bold flex items-center justify-center"
+              className="row-start-3 md:row-start-1 col-span-2 2xl:col-span-1 md:col-start-7 disabled:bg-slate-300 text-white bg-gray-700 hover:bg-gray-900 p-3 rounded-full font-bold flex items-center justify-center"
             >
               Buscar
             </button>
           ) : (
             <button
               type="submit"
-              className="row-start-3 md:row-start-1 col-span-2 2xl:col-span-1 md:col-start-8 disabled:bg-slate-300 text-white bg-gray-700 hover:bg-gray-900 p-3 rounded-full font-bold flex items-center justify-center"
+              className="row-start-3 md:row-start-1 col-span-2 2xl:col-span-1 md:col-start-7 disabled:bg-slate-300 text-white bg-gray-700 hover:bg-gray-900 p-3 rounded-full font-bold flex items-center justify-center"
             >
               Buscar
             </button>
@@ -193,7 +192,7 @@ export default function AttendanceViewAdmin() {
           {iseClient && (
             <PDFDownloadLink
               document={generatePDF()}
-              fileName="usuarios.pdf"
+              fileName="Asistencia.pdf"
               className="col-span-2 row-start-3 md:row-start-1 md:col-start-9 2xl:col-span-1 2xl:col-start-9 bg-yellow-400 hover:bg-yellow-600 p-3 rounded-full font-bold flex items-center justify-center"
             >
               <PrinterIcon className="w-5 h-5 mx-auto" />
