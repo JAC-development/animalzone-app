@@ -17,13 +17,24 @@ export default function adminLayout({ children }) {
   const [amountUsers, setAmountUsers] = useState();
   const id = 'animalzone';
 
-  const fetchData = async () => {
-    const res = await handleGetAllData();
-    return res;
+  const notifyIn = (text) => {
+    toast.success(text, {
+      position: 'bottom-right',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      toastId: id,
+      icon: false,
+      progress: undefined,
+      theme: 'colored',
+    });
+    toast.clearWaitingQueue();
   };
 
-  const notify = (text) => {
-    toast.warn(text, {
+  const notifyOut = (text) => {
+    toast.error(text, {
       position: 'bottom-right',
       autoClose: 5000,
       hideProgressBar: false,
@@ -42,10 +53,20 @@ export default function adminLayout({ children }) {
     snapshot.docChanges().forEach(async (change) => {
       if (change.type === 'modified') {
         const name = await handleIdToName(change.doc.id);
-        notify(`${change.doc.data().status} - ${name}`);
+        console.log(change.doc.data().status);
+        if (change.doc.data().status === 'entrada') {
+          notifyIn(`${name} ha llegado`);
+        } else {
+          notifyOut(`${name} ha salido`);
+        }
       }
     });
   });
+
+  const fetchData = async () => {
+    const res = await handleGetAllData();
+    return res;
+  };
 
   // Render the users list
   useEffect(() => {
@@ -59,7 +80,7 @@ export default function adminLayout({ children }) {
       <Menu users={userArray} amount={amountUsers} />
       <NavMobiile />
       {children}
-      <ToastContainer />
+      <ToastContainer limit={1} />
     </main>
   );
 }

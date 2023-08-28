@@ -48,19 +48,19 @@ export default function Admin() {
     toast.clearWaitingQueue();
   };
   const q = query(collection(firestore, 'attendance'));
-  onSnapshot(q, (snapshot) => {
-    snapshot.docChanges().forEach(async (change) => {
-      if (change.type === 'modified') {
-        const name = await handleIdToName(change.doc.id);
-        console.log(change.doc.data().status);
-        if (change.doc.data().status === 'entrada') {
-          notifyIn(`${name} ha llegado`);
-        } else {
-          notifyOut(`${name} ha salido`);
-        }
-      }
-    });
-  });
+  // onSnapshot(q, (snapshot) => {
+  //   snapshot.docChanges().forEach(async (change) => {
+  //     if (change.type === 'modified') {
+  //       const name = await handleIdToName(change.doc.id);
+  //       console.log(change.doc.data().status);
+  //       if (change.doc.data().status === 'entrada') {
+  //         notifyIn(`${name} ha llegado`);
+  //       } else {
+  //         notifyOut(`${name} ha salido`);
+  //       }
+  //     }
+  //   });
+  // });
   return (
     <div className="px-8 pb-16 pt-24 lg:px-14 xl:px-24 flex flex-col justify-between">
       {/* Main section */}
