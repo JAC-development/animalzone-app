@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 'use client';
 import { useState, useEffect, useRef } from 'react';
 import { ArrowLeftCircleIcon } from '@heroicons/react/24/outline';
@@ -8,7 +7,7 @@ import { DocTemplateAttendance } from '@components/DocTemplate';
 import { stylesAttendance } from 'assets/PDF/pdfstyles';
 import { AttendanceRow } from '@components/TableRow';
 import { DocTemplateUsers } from '@components/DocTemplate';
-import { handleGetUserDates, handleGetAllData, handleGetUserDatesListPM, handleIdToName } from 'api/endpoints/useGetData';
+import { handleGetUserDates, handleGetAllData, handleGetUserDatesPM, handleGetUserDatesListPM, handleNameToId } from 'api/endpoints/useGetData';
 // Function to generate PDF
 const generatePDF = () => (
   <Document>
@@ -42,28 +41,28 @@ const generatePDF = () => (
 export default function AttendanceViewAdmin() {
   const [tableData, setTableData] = useState(null);
   const [userArray, setUserArray] = useState([]);
-  const [userFiltered, setUserFiltered] = useState([]);
-  const [userSelected, setUserSelected] = useState('');
+  const [userSelected, setUserSelected] = useState();
+  const [currentYear, setCurrentYear] = useState();
   const [docData, setDocData] = useState([]);
   const form = useRef(null);
 
   const fetchData = async () => {
     const ft = await handleGetAllData();
     setUserArray(ft);
-    const userAttendanceArray = await handleGetUserDates('jlBZj5VWM95cvgIlZzvs');
-    const userList = userAttendanceArray.map((ref) => <AttendanceRow data={ref} id={'jlBZj5VWM95cvgIlZzvs'} key={ref.id} />);
-    setDocData(DocTemplateUsers(userAttendanceArray));
-    setTableData(userList);
+    if (userSelected) {
+      const userAttendanceArray = await handleGetUserDates(userSelected);
+      const userList = userAttendanceArray.map((ref) => <AttendanceRow data={ref} id={userSelected} key={ref.id} />);
+      setDocData(DocTemplateUsers(userAttendanceArray));
+      setTableData(userList);
+    }
   };
 
   // Render the users list
   useEffect(() => {
     fetchData();
+    var dt = new Date();
+    setCurrentYear(dt.getFullYear());
   }, []);
-
-  const handleChangeUser = (user) => {
-    setUserSelected('jlBZj5VWM95cvgIlZzvs');
-  };
 
   // New filter
   const handleSubmit = async (e) => {
@@ -71,13 +70,21 @@ export default function AttendanceViewAdmin() {
     const formData = new FormData(form.current);
     const data = {
       month: formData.get('month'),
+      email: formData.get('uss'),
+      year: formData.get('year'),
     };
-    if (userSelected != '' || data.month != '') {
-      const newList = await handleGetUserDatesListPM({ id: 'jlBZj5VWM95cvgIlZzvs', month: data.month });
-      setUserFiltered(newList);
-      console.log(newList);
+    const newUser = await handleNameToId(data.email);
+    setUserSelected(newUser);
+
+    if (data.month === 'All') {
+      fetchData();
+    } else {
+      console.log('hey: ', userSelected);
+      const newList = await handleGetUserDatesListPM(userSelected, `${data.month} ${data.year}`);
+      const userList = newList.map((ref) => <AttendanceRow data={ref} id={userSelected} key={ref.id} />);
+      setDocData(DocTemplateUsers(newList));
+      setTableData(userList);
     }
-    fetchData();
   };
 
   return (
@@ -96,32 +103,85 @@ export default function AttendanceViewAdmin() {
           <p className="text-gray-400">Un resumen clasificado y revisado.</p>
         </div>
       </div>
+      <button onClick={async () => console.log(await handleGetUserDatesPM())}>get</button>
       {/* Menu section for filters and actions */}
-      <div className="grid grid-cols-4 md:grid-cols-9 grid-rows-3 md:grid-rows-1 gap-4 mt-12 mb-4 md:mb-12">
-        {/* <input type="text" placeholder="Search" className="col-span-3 md:col-span-3 md:col-start-1 border-2 rounded-full border-black px-4 py-2" /> */}
-        <select name="uss" defaultValue={'user'} className="row-start-2 md:row-start-1 col-span-4 md:col-span-3 md:col-start-1 outline-none border-2 border-gray-400 rounded-full py-3 px-6">
-          {userArray.map((user) => (
-            <option className="capitalize" value={`${user.name} ${user.surname}`} key={user._id}>
-              {user.name} {user.surname} ({user.email})
+      <div>
+        <form id="new-form" className="grid grid-cols-4 md:grid-cols-9 grid-rows-3 md:grid-rows-1 gap-4 mt-12 mb-4 md:mb-12" ref={form} onSubmit={handleSubmit}>
+          {/* <input type="text" placeholder="Search" className="col-span-3 md:col-span-3 md:col-start-1 border-2 rounded-full border-black px-4 py-2" /> */}
+          <select name="uss" defaultValue={''} className="row-start-2 md:row-start-1 col-span-4 md:col-span-3 md:col-start-1 outline-none border-2 border-gray-400 rounded-full py-3 px-6">
+            {userArray.map((user) => (
+              <option className="capitalize" value={user.email} key={user.id}>
+                {user.name} {user.surname} ({user.email})
+              </option>
+            ))}
+            ;
+          </select>
+          <select name="month" defaultValue={'All'} className="row-start-1 md:row-start-1 col-span-2 md:col-span-2 md:col-start-4 outline-none border-2 border-gray-400 rounded-full py-3 px-6">
+            <option className="capitalize" value="All">
+              Toda asistencia
             </option>
-          ))}
-          ;
-        </select>
-        <select name="uss" defaultValue={'1'} className="row-start-1 md:row-start-1 col-span-2 md:col-span-2 md:col-start-4 outline-none border-2 border-gray-400 rounded-full py-3 px-6">
-          <option className="capitalize" value="1">
-            Enero
-          </option>
-        </select>
-        <button className="row-start-3 md:row-start-1 col-span-2 2xl:col-span-1 md:col-start-6 text-white bg-gray-700 hover:bg-gray-900 p-3 rounded-full font-bold flex items-center justify-center">
-          Buscar
-        </button>
-        <PDFDownloadLink
-          document={generatePDF()}
-          fileName="usuarios.pdf"
-          className="col-span-2 row-start-3 md:row-start-1 md:col-start-8 2xl:col-span-1 2xl:col-start-9 bg-yellow-400 hover:bg-yellow-600 p-3 rounded-full font-bold flex items-center justify-center"
-        >
-          <PrinterIcon className="w-5 h-5 mx-auto" />
-        </PDFDownloadLink>
+            <option className="capitalize" value="January">
+              Enero
+            </option>
+            <option className="capitalize" value="February">
+              Febrero
+            </option>
+            <option className="capitalize" value="March">
+              Marzo
+            </option>
+            <option className="capitalize" value="April">
+              Abril
+            </option>
+            <option className="capitalize" value="May">
+              Mayo
+            </option>
+            <option className="capitalize" value="June">
+              Junio
+            </option>
+            <option className="capitalize" value="July">
+              Julio
+            </option>
+            <option className="capitalize" value="August">
+              Agosto
+            </option>
+            <option className="capitalize" value="September">
+              Septiembre
+            </option>
+            <option className="capitalize" value="Octuber">
+              Octubre
+            </option>
+            <option className="capitalize" value="November">
+              Noviembre
+            </option>
+            <option className="capitalize" value="December">
+              Dicembre
+            </option>
+          </select>
+          <select name="year" defaultValue={currentYear} className="row-start-1 md:row-start-1 col-span-2 md:col-span-2 md:col-start-6 outline-none border-2 border-gray-400 rounded-full py-3 px-6">
+            <option className="capitalize" value={currentYear - 1}>
+              {currentYear - 1}
+            </option>
+            <option className="capitalize" value={currentYear}>
+              {currentYear}
+            </option>
+            <option className="capitalize" value={currentYear + 1}>
+              {currentYear + 1}
+            </option>
+          </select>
+          <button
+            type="submit"
+            className="row-start-3 md:row-start-1 col-span-2 2xl:col-span-1 md:col-start-8 text-white bg-gray-700 hover:bg-gray-900 p-3 rounded-full font-bold flex items-center justify-center"
+          >
+            Buscar
+          </button>
+          <PDFDownloadLink
+            document={generatePDF()}
+            fileName="usuarios.pdf"
+            className="col-span-2 row-start-3 md:row-start-1 md:col-start-9 2xl:col-span-1 2xl:col-start-9 bg-yellow-400 hover:bg-yellow-600 p-3 rounded-full font-bold flex items-center justify-center"
+          >
+            <PrinterIcon className="w-5 h-5 mx-auto" />
+          </PDFDownloadLink>
+        </form>
       </div>
       {/* Table for users data */}
       <div id="history-table" className="w-full">

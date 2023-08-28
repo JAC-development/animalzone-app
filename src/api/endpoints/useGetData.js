@@ -176,26 +176,28 @@ export async function handleGetUserDates(ref) {
   return data;
 }
 
-export async function handleGetUserDatesPM(ref, refDate) {
-  const snapshot = await getDocs(collection(firestore, 'attendance', ref, 'history'));
+export async function handleGetUserDatesPM() {
+  const snapshot = await getDocs(collection(firestore, 'attendance', 'jlBZj5VWM95cvgIlZzvs', 'history'));
 
   const data = snapshot.docs.map((doc) => ({
     ...doc.data(),
   }));
 
-  const month = data.filter((date) => new Date(date.date.seconds * 1000).getMonth() === new Date(refDate).getMonth());
+  const month = data.filter((date) => new Date(date.date.seconds * 1000).getMonth() === new Date('August 2023').getMonth());
 
   return month.length;
 }
 
-export async function handleGetUserDatesListPM(ref, refDate) {
-  const snapshot = await getDocs(collection(firestore, 'attendance', ref, 'history'));
+export async function handleGetUserDatesListPM() {
+  const snapshot = await getDocs(collection(firestore, 'attendance', 'jlBZj5VWM95cvgIlZzvs', 'history'));
 
   const data = snapshot.docs.map((doc) => ({
     ...doc.data(),
   }));
 
-  const month = data.filter((date) => new Date(date.date.seconds * 1000).getMonth() === new Date(refDate).getMonth());
+  const month = data.filter((date) => new Date(date.date.seconds * 1000).getMonth() === new Date('August 2023').getMonth());
+
+  console.log(month);
 
   return month;
 }
