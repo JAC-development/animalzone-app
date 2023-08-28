@@ -116,7 +116,7 @@ export default function AttendanceViewAdmin() {
             {iseClient &&
               userArray.map((user) => (
                 <option className="capitalize" value={user?.id} key={user.id}>
-                  {user.name} {user.surname} ({user.email})
+                  {user.name} {user.surname} <strong>({user.email})</strong>
                 </option>
               ))}
             ;
@@ -162,7 +162,7 @@ export default function AttendanceViewAdmin() {
               Dicembre
             </option>
           </select>
-          <select name="year" defaultValue={currentYear} className="row-start-1 md:row-start-1 col-span-2 md:col-span-2 md:col-start-6 outline-none border-2 border-gray-400 rounded-full py-3 px-6">
+          <select name="year" defaultValue={currentYear} className="row-start-1 md:row-start-1 col-span-2 md:col-span-1 md:col-start-6 outline-none border-2 border-gray-400 rounded-full py-3 px-6">
             <option className="capitalize" value={currentYear - 1}>
               {currentYear - 1}
             </option>
@@ -177,14 +177,14 @@ export default function AttendanceViewAdmin() {
             <button
               disabled
               type="submit"
-              className="row-start-3 md:row-start-1 col-span-2 2xl:col-span-1 md:col-start-8 disabled:bg-slate-300 text-white bg-gray-700 hover:bg-gray-900 p-3 rounded-full font-bold flex items-center justify-center"
+              className="row-start-3 md:row-start-1 col-span-2 2xl:col-span-1 md:col-start-7 disabled:bg-slate-300 text-white bg-gray-700 hover:bg-gray-900 p-3 rounded-full font-bold flex items-center justify-center"
             >
               Buscar
             </button>
           ) : (
             <button
               type="submit"
-              className="row-start-3 md:row-start-1 col-span-2 2xl:col-span-1 md:col-start-8 disabled:bg-slate-300 text-white bg-gray-700 hover:bg-gray-900 p-3 rounded-full font-bold flex items-center justify-center"
+              className="row-start-3 md:row-start-1 col-span-2 2xl:col-span-1 md:col-start-7 disabled:bg-slate-300 text-white bg-gray-700 hover:bg-gray-900 p-3 rounded-full font-bold flex items-center justify-center"
             >
               Buscar
             </button>
