@@ -10,6 +10,7 @@ export default function Scanner() {
   const [coord, setCoord] = useState('');
   const [show, setShow] = useState(true);
   const { userData } = useContext(AuthContext);
+  const [scanned, setScanned] = useState('Cargando...');
 
   const notify = (text) =>
     toast.success(text, {
@@ -44,6 +45,7 @@ export default function Scanner() {
         date: new Date(),
       });
       notify('Asistencia registrada');
+      setScanned('Asistencia registrada');
     } catch (error) {
       notifyError(error?.message);
     }
@@ -103,7 +105,7 @@ export default function Scanner() {
     <div className="pt-2 sm:pt-20 w-full text-center">
       <h2 className="my-4">Escanea el codigo de asistencia</h2>
       <div className="w-full sm:w-3/4 md:w-1/2 mx-auto">
-        {show ? <QrScanner onDecode={(res) => handleGetLocation(res)} onError={(error) => console.log(error?.message)} /> : <h1 className="my-20">Cargando...</h1>}
+        {show ? <QrScanner onDecode={(res) => handleGetLocation(res)} onError={(error) => console.log(error?.message)} /> : <h1 className="my-20">{scanned}</h1>}
       </div>
       <ToastContainer />
     </div>
