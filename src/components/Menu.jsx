@@ -1,3 +1,4 @@
+/* eslint-disable no-dupe-else-if */
 /* eslint-disable no-unused-vars */
 'use client';
 import Image from 'next/image';
@@ -44,7 +45,7 @@ const Menu = ({ users, amount }) => {
             </div>
             <div>
               <h2>{userData.name}</h2>
-              <p className="font-light">{userData.rol}</p>
+              <p className="font-light">Administrador</p>
             </div>
           </div>
         </div>
@@ -113,7 +114,7 @@ const Menu = ({ users, amount }) => {
             </div>
             <div>
               <h2>{userData.name}</h2>
-              <p className="font-light">{userData.rol}</p>
+              <p className="font-light">Monitor</p>
             </div>
           </div>
         </div>
@@ -180,8 +181,8 @@ const Menu = ({ users, amount }) => {
               <Image src={profile} width={100} height={100} alt="profile image" />
             </div>
             <div>
-              <h2>{userData.name}</h2>
-              <p className="font-light">{userData.rol}</p>
+              <h2 className="capitalize">{userData.name}</h2>
+              <p className="font-light">Usuario</p>
             </div>
           </div>
         </div>

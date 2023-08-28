@@ -1,5 +1,5 @@
 'use client';
-import { handleGetAllData } from 'api/endpoints/useGetData';
+import { handleGetAllData, handleIdToName } from 'api/endpoints/useGetData';
 import { PencilIcon, TrashIcon } from '@heroicons/react/24/solid';
 import { AuthContext } from 'hooks/useAuth';
 import { useContext, useState, useRef, useEffect } from 'react';
@@ -21,6 +21,57 @@ const SimpleRow = ({ data }) => {
   );
 };
 
+const AttendanceRow = ({ data, id }) => {
+  const [refFullName, setRefFullName] = useState();
+  const [refDay, setRefDay] = useState();
+  const [refMonth, setRefMonth] = useState();
+  const [refYear, setRefYear] = useState();
+  const [refFullHour, setRefFullHour] = useState();
+  const [refTime, setRefTime] = useState();
+
+  useEffect(() => {
+    const date = new Date(data.date.seconds * 1000);
+    setRefFullName(handleIdToName(id));
+    setRefDay(date.getDate());
+    setRefMonth(date.getMonth() + 1);
+    setRefYear(date.getFullYear());
+    const hours = date.getHours();
+    const hours12 = hours % 12 || 12;
+    const minutes = date.getMinutes();
+    const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+    setRefFullHour(`${hours12}:${formattedMinutes}`);
+    if (hours > 12) {
+      setRefTime(1);
+    } else {
+      setRefTime(0);
+    }
+  }, []);
+
+  return (
+    <tr className="text-gray-600">
+      <td className="px-10 py-5 text-center">
+        <div className="flex items-center justify-center gap-4">
+          <p className="capitalize text-center">{refFullName}</p>
+        </div>
+      </td>
+      <td className="px-10 py-5 text-center">Asistencia</td>
+      <td className="px-10 py-5 text-center capitalize">{data.status}</td>
+      <td className="px-10 py-5 text-center">
+        {refDay}/{refMonth}/{refYear}
+      </td>
+      <td className="px-10 py-5 text-center font-bold">
+        {refFullHour} {refTime == 1 ? 'PM' : 'AM'}
+      </td>
+    </tr>
+  );
+};
+
+const SimpleAttendace = async () => {
+  const userArray = await handleGetAllData();
+  const userList = userArray.map((user) => <AttendanceRow data={user} key={user.id} />);
+  return userList;
+};
+
 const UserRow = ({ data }) => {
   const { userData } = useContext(AuthContext);
   const [refDay, setRefDay] = useState();
@@ -30,15 +81,15 @@ const UserRow = ({ data }) => {
   const [refTime, setRefTime] = useState();
   useEffect(() => {
     const date = new Date(data.date.seconds * 1000);
-    setRefDay(date.getDay());
-    setRefMonth(date.getMonth());
+    setRefDay(date.getDate());
+    setRefMonth(date.getMonth() + 1);
     setRefYear(date.getFullYear());
     const hours = date.getHours();
     const hours12 = hours % 12 || 12;
     const minutes = date.getMinutes();
     const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
     setRefFullHour(`${hours12}:${formattedMinutes}`);
-    if (setRefTime > 12) {
+    if (hours > 12) {
       setRefTime(1);
     } else {
       setRefTime(0);
@@ -54,7 +105,6 @@ const UserRow = ({ data }) => {
         </div>
       </td>
       <td className="px-10 py-5 text-center">Asistencia</td>
-      <td className="px-10 py-5 text-center">Correcta</td>
       <td className="px-10 py-5 text-center capitalize">{data.status}</td>
       <td className="px-10 py-5 text-center">
         {refDay}/{refMonth}/{refYear}
@@ -193,4 +243,4 @@ const TableRow = async () => {
   return userList;
 };
 
-export { TableRow, AdvanceRow, UserRow };
+export { TableRow, AdvanceRow, UserRow, SimpleAttendace, AttendanceRow };

@@ -36,7 +36,6 @@ export default function Home() {
             <tr>
               <th className="px-10 py-5 sticky top-0">Nombre Completo</th>
               <th className="px-10 py-5 sticky top-0">Registro</th>
-              <th className="px-10 py-5 sticky top-0">Ubicacion</th>
               <th className="px-10 py-5 sticky top-0">Tipo</th>
               <th className="px-10 py-5 sticky top-0">Fecha</th>
               <th className="px-10 py-5 sticky top-0">Hora</th>

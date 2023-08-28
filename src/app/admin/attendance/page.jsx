@@ -1,9 +1,14 @@
+/* eslint-disable no-unused-vars */
 'use client';
-import { ArrowLeftCircleIcon, PlusIcon } from '@heroicons/react/24/outline';
-import { FunnelIcon, PrinterIcon } from '@heroicons/react/24/solid';
+import { useState, useEffect, useRef } from 'react';
+import { ArrowLeftCircleIcon } from '@heroicons/react/24/outline';
+import { PrinterIcon } from '@heroicons/react/24/solid';
 import { PDFDownloadLink, Document, Page, View, Text } from '@react-pdf/renderer';
 import { DocTemplateAttendance } from '@components/DocTemplate';
 import { stylesAttendance } from 'assets/PDF/pdfstyles';
+import { AttendanceRow } from '@components/TableRow';
+import { DocTemplateUsers } from '@components/DocTemplate';
+import { handleGetUserDates, handleGetAllData, handleGetUserDatesListPM, handleIdToName } from 'api/endpoints/useGetData';
 // Function to generate PDF
 const generatePDF = () => (
   <Document>
@@ -35,8 +40,48 @@ const generatePDF = () => (
 );
 
 export default function AttendanceViewAdmin() {
+  const [tableData, setTableData] = useState(null);
+  const [userArray, setUserArray] = useState([]);
+  const [userFiltered, setUserFiltered] = useState([]);
+  const [userSelected, setUserSelected] = useState('');
+  const [docData, setDocData] = useState([]);
+  const form = useRef(null);
+
+  const fetchData = async () => {
+    const ft = await handleGetAllData();
+    setUserArray(ft);
+    const userAttendanceArray = await handleGetUserDates('jlBZj5VWM95cvgIlZzvs');
+    const userList = userAttendanceArray.map((ref) => <AttendanceRow data={ref} id={'jlBZj5VWM95cvgIlZzvs'} key={ref.id} />);
+    setDocData(DocTemplateUsers(userAttendanceArray));
+    setTableData(userList);
+  };
+
+  // Render the users list
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const handleChangeUser = (user) => {
+    setUserSelected('jlBZj5VWM95cvgIlZzvs');
+  };
+
+  // New filter
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(form.current);
+    const data = {
+      month: formData.get('month'),
+    };
+    if (userSelected != '' || data.month != '') {
+      const newList = await handleGetUserDatesListPM({ id: 'jlBZj5VWM95cvgIlZzvs', month: data.month });
+      setUserFiltered(newList);
+      console.log(newList);
+    }
+    fetchData();
+  };
+
   return (
-    <div className="px-8 py-12 lg:px-14 xl:px-24 w-full">
+    <div className="px-8 py-12 lg:px-14 xl:px-24 lg:pt-24 w-full max-h-screen overflow-y-scroll">
       {/* Go back section on top */}
       <div className="flex gap-4">
         <div className="flex items-start">
@@ -52,96 +97,52 @@ export default function AttendanceViewAdmin() {
         </div>
       </div>
       {/* Menu section for filters and actions */}
-      <div className="grid grid-cols-4 md:grid-cols-8 grid-rows-2 md:grid-rows-1 gap-4 mt-12 mb-4 md:mb-12">
-        <input type="text" placeholder="Search" className="col-span-3 md:col-span-3 md:col-start-1 border-2 rounded-full border-black px-4 py-2" />
+      <div className="grid grid-cols-4 md:grid-cols-9 grid-rows-3 md:grid-rows-1 gap-4 mt-12 mb-4 md:mb-12">
+        {/* <input type="text" placeholder="Search" className="col-span-3 md:col-span-3 md:col-start-1 border-2 rounded-full border-black px-4 py-2" /> */}
+        <select name="uss" defaultValue={'user'} className="row-start-2 md:row-start-1 col-span-4 md:col-span-3 md:col-start-1 outline-none border-2 border-gray-400 rounded-full py-3 px-6">
+          {userArray.map((user) => (
+            <option className="capitalize" value={`${user.name} ${user.surname}`} key={user._id}>
+              {user.name} {user.surname} ({user.email})
+            </option>
+          ))}
+          ;
+        </select>
+        <select name="uss" defaultValue={'1'} className="row-start-1 md:row-start-1 col-span-2 md:col-span-2 md:col-start-4 outline-none border-2 border-gray-400 rounded-full py-3 px-6">
+          <option className="capitalize" value="1">
+            Enero
+          </option>
+        </select>
+        <button className="row-start-3 md:row-start-1 col-span-2 2xl:col-span-1 md:col-start-6 text-white bg-gray-700 hover:bg-gray-900 p-3 rounded-full font-bold flex items-center justify-center">
+          Buscar
+        </button>
         <PDFDownloadLink
           document={generatePDF()}
-          fileName="asistencias.pdf"
-          className="col-span-1 md:col-start-9 bg-yellow-400 hover:bg-yellow-600 p-3 rounded-full font-bold flex items-center justify-center"
+          fileName="usuarios.pdf"
+          className="col-span-2 row-start-3 md:row-start-1 md:col-start-8 2xl:col-span-1 2xl:col-start-9 bg-yellow-400 hover:bg-yellow-600 p-3 rounded-full font-bold flex items-center justify-center"
         >
           <PrinterIcon className="w-5 h-5 mx-auto" />
         </PDFDownloadLink>
-        <button className="row-start-2 md:row-start-1 col-span-2 md:col-span-2 md:col-start-4 mr-auto flex gap-2 items-center font-bold">
-          <span>
-            <FunnelIcon className="w-5 h-5" />
-          </span>
-          Filtrar por
-        </button>
-        <button className="row-start-2 md:row-start-1 col-span-2 md:col-span-2 md:col-start-6 ml-auto flex gap-2 items-center font-bold">
-          <span>
-            <PlusIcon className="w-5 h-5" />
-          </span>
-          Añadir horas
-        </button>
       </div>
+      {/* Table for users data */}
       <div id="history-table" className="w-full">
-        <table className="block md:table py-8 mx-auto w-full max-w-full overflow-x-auto">
-          <thead>
-            <tr>
-              <th className="px-10 py-5 sticky top-0">Nombre Completo</th>
-              <th className="px-10 py-5 sticky top-0">Registro</th>
-              <th className="px-10 py-5 sticky top-0">Horas adicionales</th>
-              <th className="px-10 py-5 sticky top-0">Time</th>
-            </tr>
-          </thead>
-          <tbody className="whitespace-nowrap">
-            <tr className="bg-gray-300">
-              <td className="px-10 py-5 text-center">
-                <div className="flex items-center justify-center gap-4">
-                  <div className="w-8 h-8 bg-black rounded-full"></div>
-                  <p>Miriam Rodriguez</p>
-                </div>
-              </td>
-              <td className="px-10 py-5 text-center">14 asistecias</td>
-              <td className="px-10 py-5 text-center">+5 horas</td>
-              <td className="px-10 py-5 text-center">09:04 AM</td>
-            </tr>
-            <tr>
-              <td className="px-10 py-5 text-center">
-                <div className="flex items-center justify-center gap-4">
-                  <div className="w-8 h-8 bg-black rounded-full"></div>
-                  <p>Victor Carrillo</p>
-                </div>
-              </td>
-              <td className="px-10 py-5 text-center">9 assistencias</td>
-              <td className="px-10 py-5 text-center">+2 horas</td>
-              <td className="px-10 py-5 text-center">09:04 AM</td>
-            </tr>
-            <tr className="bg-gray-300">
-              <td className="px-10 py-5 text-center">
-                <div className="flex items-center justify-center gap-4">
-                  <div className="w-8 h-8 bg-black rounded-full"></div>
-                  <p>Jonathan Ocampo</p>
-                </div>
-              </td>
-              <td className="px-10 py-5 text-center">4 asistencias</td>
-              <td className="px-10 py-5 text-center">n/a</td>
-              <td className="px-10 py-5 text-center">09:04 AM</td>
-            </tr>
-            <tr>
-              <td className="px-10 py-5 text-center">
-                <div className="flex items-center justify-center gap-4">
-                  <div className="w-8 h-8 bg-black rounded-full"></div>
-                  <p>Carlos Sanchez</p>
-                </div>
-              </td>
-              <td className="px-10 py-5 text-center">6 asistencias</td>
-              <td className="px-10 py-5 text-center">+3 horas</td>
-              <td className="px-10 py-5 text-center">09:04 AM</td>
-            </tr>
-            <tr className="bg-gray-300">
-              <td className="px-10 py-5 text-center">
-                <div className="flex items-center justify-center gap-4">
-                  <div className="w-8 h-8 bg-black rounded-full"></div>
-                  <p>David Aguirre</p>
-                </div>
-              </td>
-              <td className="px-10 py-5 text-center">14 asistencias</td>
-              <td className="px-10 py-5 text-center">+1 horas</td>
-              <td className="px-10 py-5 text-center">09:04 AM</td>
-            </tr>
-          </tbody>
-        </table>
+        {userSelected !== '' ? (
+          <table className="block md:table py-8 mx-auto w-full max-w-full overflow-x-auto">
+            <thead>
+              <tr>
+                <th className="px-10 py-5 sticky top-0">Nombre Completo</th>
+                <th className="px-10 py-5 sticky top-0">Registro</th>
+                <th className="px-10 py-5 sticky top-0">Tipo</th>
+                <th className="px-10 py-5 sticky top-0">Fecha</th>
+                <th className="px-10 py-5 sticky top-0">Hora</th>
+              </tr>
+            </thead>
+            <tbody className="whitespace-nowrap">{tableData}</tbody>
+          </table>
+        ) : (
+          <div className="flex justify-center">
+            <p className="text-gray-500">No hay filtros por aplicar</p>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -17,8 +17,23 @@ export default function Admin() {
   const { userData } = useContext(AuthContext);
   const id = 'animalzone';
 
-  const notify = (text) => {
-    toast.warn(text, {
+  const notifyIn = (text) => {
+    toast.success(text, {
+      position: 'bottom-right',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      toastId: id,
+      icon: false,
+      progress: undefined,
+      theme: 'colored',
+    });
+    toast.clearWaitingQueue();
+  };
+  const notifyOut = (text) => {
+    toast.error(text, {
       position: 'bottom-right',
       autoClose: 5000,
       hideProgressBar: false,
@@ -37,7 +52,12 @@ export default function Admin() {
     snapshot.docChanges().forEach(async (change) => {
       if (change.type === 'modified') {
         const name = await handleIdToName(change.doc.id);
-        notify(`${change.doc.data().status} - ${name}`);
+        console.log(change.doc.data().status);
+        if (change.doc.data().status === 'entrada') {
+          notifyIn(`${name} ha llegado`);
+        } else {
+          notifyOut(`${name} ha salido`);
+        }
       }
     });
   });
@@ -49,7 +69,7 @@ export default function Admin() {
         <div>
           <p className="text-gray-400">ANIMAL ZONE</p>
           <p className="text-5xl py-2">Hola, {userData.name}!</p>
-          <p className="text-gray-400">{userData.rol}</p>
+          <p className="text-gray-400">Administrador</p>
         </div>
 
         {/* Report quick action block */}

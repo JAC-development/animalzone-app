@@ -90,7 +90,7 @@ export default function Home() {
             autoComplete="current-password"
             name="password"
             onChange={(e) => setPass(e.target.value)}
-            type="text"
+            type="password"
             placeholder="Enter your password"
           />
 

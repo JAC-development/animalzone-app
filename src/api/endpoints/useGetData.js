@@ -1,5 +1,5 @@
 'use client';
-import { getFirestore, collection, query, getDocs, where, addDoc, setDoc, doc, getDoc, deleteDoc } from 'firebase/firestore';
+import { getFirestore, collection, query, getDocs, where, addDoc, setDoc, doc, getDoc, deleteDoc, orderBy, updateDoc } from 'firebase/firestore';
 import { app } from 'firebaseConfig';
 import bcrypt from 'bcryptjs';
 
@@ -56,8 +56,21 @@ export async function handleAddData(data) {
   }
 }
 
+export async function handleModifyData(data) {
+  console.log(data);
+  const ref = doc(firestore, 'usuarios', data._id);
+  if (data) {
+    await updateDoc(ref, { name: data.name, surname: data.surname, email: data.surname, rol: data.rol })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+}
+
 export async function handleGetUser(user) {
-  console.log(user, 'Este llegoooo');
   const snapshot = await getDocs(collection(firestore, 'attendance', user, 'assistance'));
 
   const data = snapshot.docs.map((doc) => ({
@@ -138,7 +151,7 @@ export async function handleGetAllData() {
 }
 
 export async function handleGetUserDates(ref) {
-  const snapshot = await getDocs(collection(firestore, 'attendance', ref, 'history'));
+  const snapshot = await getDocs(query(collection(firestore, 'attendance', ref, 'history'), orderBy('date', 'desc')));
 
   const data = snapshot.docs.map((doc) => ({
     id: doc.id,
@@ -160,4 +173,16 @@ export async function handleGetUserDatesPM(ref, refDate) {
   const month = data.filter((date) => new Date(date.date.seconds * 1000).getMonth() === new Date(refDate).getMonth());
 
   return month.length;
+}
+
+export async function handleGetUserDatesListPM(ref, refDate) {
+  const snapshot = await getDocs(collection(firestore, 'attendance', ref, 'history'));
+
+  const data = snapshot.docs.map((doc) => ({
+    ...doc.data(),
+  }));
+
+  const month = data.filter((date) => new Date(date.date.seconds * 1000).getMonth() === new Date(refDate).getMonth());
+
+  return month;
 }
