@@ -120,14 +120,16 @@ const AdvanceRow = ({ data, del, edit }) => {
   const [showEdit, setShowEdit] = useState(false);
   const [userName, setUserName] = useState(null);
   const [userSurname, setUserSurname] = useState(null);
+  const [userRol, setUserRol] = useState(null);
   const [userEmail, setUserEmail] = useState(null);
   const formEdit = useRef(null);
 
-  const showEditModal = async ({ name, surname, email }) => {
+  const showEditModal = async ({ name, surname, email, rol }) => {
     setShowEdit(!showEdit);
-    document.getElementById('new-name').value = name;
-    document.getElementById('new-surname').value = surname;
-    document.getElementById('new-email').value = email;
+    setUserName(name);
+    setUserSurname(surname);
+    setUserEmail(email);
+    setUserRol(rol);
   };
 
   // Edit user function
@@ -165,6 +167,7 @@ const AdvanceRow = ({ data, del, edit }) => {
           <div className="flex gap-2 flex-col">
             <input
               onChange={(e) => setUserName(e.target.value)}
+              value={userName}
               autoComplete="given-name"
               id="new-name"
               name="new-name"
@@ -174,6 +177,7 @@ const AdvanceRow = ({ data, del, edit }) => {
             />
             <input
               onChange={(e) => setUserSurname(e.target.value)}
+              value={userSurname}
               autoComplete="family-name"
               id="new-surname"
               name="new-surname"
@@ -183,6 +187,7 @@ const AdvanceRow = ({ data, del, edit }) => {
             />
             <input
               onChange={(e) => setUserEmail(e.target.value)}
+              value={userEmail}
               autoComplete="email"
               id="new-email"
               name="new-email"
@@ -190,7 +195,7 @@ const AdvanceRow = ({ data, del, edit }) => {
               type="text"
               placeholder="Correo electronico"
             />
-            <select name="new-role" defaultValue={'user'} className="outline-none border-2 mt-4 border-gray-400 rounded-full px-4 py-2">
+            <select name="new-role" value={userRol} className="outline-none border-2 mt-4 border-gray-400 rounded-full px-4 py-2">
               <option value="user">Usuario</option>
               <option value="admin">Administrador</option>
               <option value="monitor">Monitor</option>
