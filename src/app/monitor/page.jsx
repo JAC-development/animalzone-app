@@ -56,10 +56,10 @@ export default function MonitorView() {
           <table className="block md:table py-8 mx-auto w-full max-w-full overflow-x-auto">
             <thead>
               <tr>
-                <th className="px-10 py-5 sticky top-0">Full Name</th>
-                <th className="px-10 py-5 sticky top-0">Situation</th>
-                <th className="px-10 py-5 sticky top-0">Date</th>
-                <th className="px-10 py-5 sticky top-0">Time</th>
+                <th className="px-10 py-5 top-0">Full Name</th>
+                <th className="px-10 py-5 top-0">Situation</th>
+                <th className="px-10 py-5 top-0">Date</th>
+                <th className="px-10 py-5 top-0">Time</th>
               </tr>
             </thead>
             <tbody className="whitespace-nowrap">

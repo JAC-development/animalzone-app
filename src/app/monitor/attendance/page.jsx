@@ -43,10 +43,10 @@ export default function AttendanceView() {
         <table className="block md:table py-8 mx-auto w-full max-w-full overflow-x-auto">
           <thead>
             <tr>
-              <th className="px-10 py-5 sticky top-0">Full Name</th>
-              <th className="px-10 py-5 sticky top-0">Registro</th>
-              <th className="px-10 py-5 sticky top-0">Horas adicionales</th>
-              <th className="px-10 py-5 sticky top-0">Time</th>
+              <th className="px-10 py-5 top-0">Full Name</th>
+              <th className="px-10 py-5 top-0">Registro</th>
+              <th className="px-10 py-5 top-0">Horas adicionales</th>
+              <th className="px-10 py-5 top-0">Time</th>
             </tr>
           </thead>
           <tbody className="whitespace-nowrap">

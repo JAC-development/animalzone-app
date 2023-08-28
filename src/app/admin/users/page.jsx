@@ -263,10 +263,10 @@ export default function AdminUsers() {
           <table className="block md:table py-8 mx-auto w-full max-w-full overflow-x-auto">
             <thead>
               <tr>
-                <th className="px-10 py-5 sticky top-0">Nombre Completo</th>
-                <th className="px-10 py-5 sticky top-0">Record</th>
-                <th className="px-10 py-5 sticky top-0">Rol</th>
-                <th className="px-10 py-5 sticky top-0">Acciones</th>
+                <th className="px-10 py-5 top-0">Nombre Completo</th>
+                <th className="px-10 py-5 top-0">Record</th>
+                <th className="px-10 py-5 top-0">Rol</th>
+                <th className="px-10 py-5 top-0">Acciones</th>
               </tr>
             </thead>
             <tbody className="whitespace-nowrap">{tableData}</tbody>
