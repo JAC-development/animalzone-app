@@ -4,6 +4,7 @@ import { FunnelIcon, PrinterIcon } from '@heroicons/react/24/solid';
 import { PDFDownloadLink, Document, Page, View, Text } from '@react-pdf/renderer';
 import { DocTemplateAttendance } from '@components/DocTemplate';
 import { stylesAttendance } from 'assets/PDF/pdfstyles';
+import { useEffect, useState } from 'react';
 // Function to generate PDF
 const generatePDF = () => (
   <Document>
@@ -35,6 +36,11 @@ const generatePDF = () => (
 );
 
 export default function AttendanceViewAdmin() {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
   return (
     <div className="px-8 py-12 lg:px-14 xl:px-24 w-full">
       {/* Go back section on top */}
@@ -54,13 +60,15 @@ export default function AttendanceViewAdmin() {
       {/* Menu section for filters and actions */}
       <div className="grid grid-cols-4 md:grid-cols-8 grid-rows-2 md:grid-rows-1 gap-4 mt-12 mb-4 md:mb-12">
         <input type="text" placeholder="Search" className="col-span-3 md:col-span-3 md:col-start-1 border-2 rounded-full border-black px-4 py-2" />
-        <PDFDownloadLink
-          document={generatePDF()}
-          fileName="asistencias.pdf"
-          className="col-span-1 md:col-start-9 bg-yellow-400 hover:bg-yellow-600 p-3 rounded-full font-bold flex items-center justify-center"
-        >
-          <PrinterIcon className="w-5 h-5 mx-auto" />
-        </PDFDownloadLink>
+        {isClient && (
+          <PDFDownloadLink
+            document={generatePDF()}
+            fileName="asistencias.pdf"
+            className="col-span-1 md:col-start-9 bg-yellow-400 hover:bg-yellow-600 p-3 rounded-full font-bold flex items-center justify-center"
+          >
+            <PrinterIcon className="w-5 h-5 mx-auto" />
+          </PDFDownloadLink>
+        )}
         <button className="row-start-2 md:row-start-1 col-span-2 md:col-span-2 md:col-start-4 mr-auto flex gap-2 items-center font-bold">
           <span>
             <FunnelIcon className="w-5 h-5" />
