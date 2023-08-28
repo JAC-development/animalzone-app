@@ -14,6 +14,7 @@ export default function Home() {
   const { userData } = useContext(AuthContext);
   const [tableData, setTableData] = useState(null);
   const [docData, setDocData] = useState([]);
+  const [isClient, setIsClient] = useState(false);
 
   const fetchData = async () => {
     const userArray = await handleGetUserDates(userData.id);
@@ -54,6 +55,7 @@ export default function Home() {
   // Render the users list
   useEffect(() => {
     fetchData();
+    setIsClient(true);
   }, []);
 
   return (
@@ -63,13 +65,15 @@ export default function Home() {
         <div>
           <h1 className="text-3xl">Historial</h1>
           <p className="text-gray-400">Ultimas asistencias y fechas.</p>
-          <PDFDownloadLink
-            document={generatePDF()}
-            fileName="Historial de asistencias.pdf"
-            className="col-span-1 md:col-start-9 bg-yellow-400 hover:bg-yellow-600 p-3 rounded-full font-bold flex items-center justify-center"
-          >
-            <PrinterIcon className="w-5 h-5 mx-auto" />
-          </PDFDownloadLink>
+          {isClient && (
+            <PDFDownloadLink
+              document={generatePDF()}
+              fileName="Historial de asistencias.pdf"
+              className="col-span-1 md:col-start-9 bg-yellow-400 hover:bg-yellow-600 p-3 rounded-full font-bold flex items-center justify-center"
+            >
+              <PrinterIcon className="w-5 h-5 mx-auto" />
+            </PDFDownloadLink>
+          )}
         </div>
       </div>
       <div id="history-table" className="w-full">
