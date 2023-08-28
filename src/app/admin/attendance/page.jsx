@@ -189,11 +189,11 @@ export default function AttendanceViewAdmin() {
           <table className="block md:table py-8 mx-auto w-full max-w-full overflow-x-auto">
             <thead>
               <tr>
-                <th className="px-10 py-5 sticky top-0">Nombre Completo</th>
-                <th className="px-10 py-5 sticky top-0">Registro</th>
-                <th className="px-10 py-5 sticky top-0">Tipo</th>
-                <th className="px-10 py-5 sticky top-0">Fecha</th>
-                <th className="px-10 py-5 sticky top-0">Hora</th>
+                <th className="px-10 py-5 top-0">Nombre Completo</th>
+                <th className="px-10 py-5 top-0">Registro</th>
+                <th className="px-10 py-5 top-0">Tipo</th>
+                <th className="px-10 py-5 top-0">Fecha</th>
+                <th className="px-10 py-5 top-0">Hora</th>
               </tr>
             </thead>
             <tbody className="whitespace-nowrap">{tableData}</tbody>

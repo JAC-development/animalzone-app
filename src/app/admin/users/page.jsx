@@ -24,6 +24,7 @@ export default function AdminUsers() {
   const [tableData, setTableData] = useState(null);
   const [docData, setDocData] = useState([]);
   const [search, setSearch] = useState('');
+  const [isClient, setIsClient] = useState(false);
   const form = useRef(null);
 
   const notifyError = (text) =>
@@ -85,6 +86,7 @@ export default function AdminUsers() {
   // Render the users list
   useEffect(() => {
     fetchData();
+    setIsClient(true);
   }, []);
 
   // Render the users list
@@ -176,13 +178,15 @@ export default function AdminUsers() {
       {/* Menu section for filters and actions */}
       <div className="grid grid-cols-4 md:grid-cols-9 grid-rows-2 md:grid-rows-1 gap-4 mt-12 mb-4 md:mb-12">
         {/* <input type="text" placeholder="Search" className="col-span-3 md:col-span-3 md:col-start-1 border-2 rounded-full border-black px-4 py-2" /> */}
-        <PDFDownloadLink
-          document={generatePDF()}
-          fileName="usuarios.pdf"
-          className="col-span-1 md:col-start-9 bg-yellow-400 hover:bg-yellow-600 p-3 rounded-full font-bold flex items-center justify-center"
-        >
-          <PrinterIcon className="w-5 h-5 mx-auto" />
-        </PDFDownloadLink>
+        {isClient && (
+          <PDFDownloadLink
+            document={generatePDF()}
+            fileName="usuarios.pdf"
+            className="col-span-1 md:col-start-9 bg-yellow-400 hover:bg-yellow-600 p-3 rounded-full font-bold flex items-center justify-center"
+          >
+            <PrinterIcon className="w-5 h-5 mx-auto" />
+          </PDFDownloadLink>
+        )}
         {/* <button className="row-start-2 md:row-start-1 hover:bg-gray-300 py-2 px-5 rounded-full col-span-2 md:col-span-2 md:col-start-4 mr-auto flex gap-2 items-center font-bold">
           <span>
             <FunnelIcon className="w-5 h-5" />
@@ -259,10 +263,10 @@ export default function AdminUsers() {
           <table className="block md:table py-8 mx-auto w-full max-w-full overflow-x-auto">
             <thead>
               <tr>
-                <th className="px-10 py-5 sticky top-0">Nombre Completo</th>
-                <th className="px-10 py-5 sticky top-0">Record</th>
-                <th className="px-10 py-5 sticky top-0">Rol</th>
-                <th className="px-10 py-5 sticky top-0">Acciones</th>
+                <th className="px-10 py-5 top-0">Nombre Completo</th>
+                <th className="px-10 py-5 top-0">Record</th>
+                <th className="px-10 py-5 top-0">Rol</th>
+                <th className="px-10 py-5 top-0">Acciones</th>
               </tr>
             </thead>
             <tbody className="whitespace-nowrap">{tableData}</tbody>
