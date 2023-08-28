@@ -1,61 +1,29 @@
 'use client';
 import { ArrowLeftCircleIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { FunnelIcon, PrinterIcon } from '@heroicons/react/24/solid';
-import { PDFDownloadLink, Document, Page, StyleSheet, View, Text } from '@react-pdf/renderer';
+import { PDFDownloadLink, Document, Page, View, Text } from '@react-pdf/renderer';
 import { DocTemplateAttendance } from '@components/DocTemplate';
-// Document style for PDF
-const styles = StyleSheet.create({
-  body: {
-    paddingTop: 35,
-    paddingBottom: 65,
-    paddingHorizontal: 35,
-  },
-  table: {
-    display: 'table',
-    width: 'auto',
-    borderStyle: 'solid',
-    borderWidth: 1,
-    borderRightWidth: 0,
-    borderBottomWidth: 0,
-  },
-  tableRow: {
-    margin: 'auto',
-    flexDirection: 'row',
-  },
-  tableCol: {
-    width: '20%',
-    borderStyle: 'solid',
-    borderWidth: 1,
-    borderLeftWidth: 0,
-    borderTopWidth: 0,
-  },
-  tableCell: {
-    margin: 'auto',
-    marginTop: 5,
-    fontSize: 14,
-  },
-});
-
+import { stylesAttendance } from 'assets/PDF/pdfstyles';
 // Function to generate PDF
 const generatePDF = () => (
   <Document>
-    <Page size="A4" style={styles.body}>
-      <View style={styles.table}>
-        <View style={styles.tableRow}>
-          <View style={styles.tableCol}>
-            <Text style={styles.tableCell}>Nombre</Text>
+    <Page size="A4" style={stylesAttendance.body}>
+      <View style={stylesAttendance.table}>
+        <View style={stylesAttendance.tableRow}>
+          <View style={stylesAttendance.tableCol}>
+            <Text style={stylesAttendance.tableCell}>Nombre</Text>
           </View>
-          <View style={styles.tableCol}>
-            <Text style={styles.tableCell}>Apellido</Text>
+          <View style={stylesAttendance.tableCol}>
+            <Text style={stylesAttendance.tableCell}>Apellido</Text>
           </View>
-          <View style={styles.tableCol}>
-            <Text style={styles.tableCell}>Registro</Text>
+          <View style={stylesAttendance.tableCol}>
+            <Text style={stylesAttendance.tableCell}>Registro</Text>
           </View>
-          <View style={styles.tableCol}>
-            <Text style={styles.tableCell}>Horas adicionales</Text>
+          <View style={stylesAttendance.tableCol}>
+            <Text style={stylesAttendance.tableCell}>Horas adicionales</Text>
           </View>
-          <View style={styles.tableCol}>
-            <Text style={styles.tableCell}>Tiempo</Text>
+          <View style={stylesAttendance.tableCol}>
+            <Text style={stylesAttendance.tableCell}>Tiempo</Text>
           </View>
         </View>
       </View>

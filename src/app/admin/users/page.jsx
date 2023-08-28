@@ -9,41 +9,9 @@ import { handleGetAllData, handleDeleteData, handleAddData, handleModifyData } f
 import bcrypt from 'bcryptjs';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { PDFDownloadLink, Document, Page, StyleSheet, View, Text } from '@react-pdf/renderer';
+import { PDFDownloadLink, Document, Page, View, Text } from '@react-pdf/renderer';
 import { DocTemplateUsers } from '@components/DocTemplate';
-
-// Document style for PDF
-const styles = StyleSheet.create({
-  body: {
-    paddingTop: 35,
-    paddingBottom: 65,
-    paddingHorizontal: 35,
-  },
-  table: {
-    display: 'table',
-    width: 'auto',
-    borderStyle: 'solid',
-    borderWidth: 1,
-    borderRightWidth: 0,
-    borderBottomWidth: 0,
-  },
-  tableRow: {
-    margin: 'auto',
-    flexDirection: 'row',
-  },
-  tableCol: {
-    width: '25%',
-    borderStyle: 'solid',
-    borderWidth: 1,
-    borderLeftWidth: 0,
-    borderTopWidth: 0,
-  },
-  tableCell: {
-    margin: 'auto',
-    marginTop: 5,
-    fontSize: 17,
-  },
-});
+import { stylesUsers } from 'assets/PDF/pdfstyles';
 
 export default function AdminUsers() {
   const [show, setShow] = useState(false);
@@ -153,20 +121,20 @@ export default function AdminUsers() {
   // Function to generate PDF
   const generatePDF = () => (
     <Document>
-      <Page size="A4" style={styles.body}>
-        <View style={styles.table}>
-          <View style={styles.tableRow}>
-            <View style={styles.tableCol}>
-              <Text style={styles.tableCell}>Nombre</Text>
+      <Page size="A4" style={stylesUsers.body}>
+        <View style={stylesUsers.table}>
+          <View style={stylesUsers.tableRow}>
+            <View style={stylesUsers.tableCol}>
+              <Text style={stylesUsers.tableCell}>Nombre</Text>
             </View>
-            <View style={styles.tableCol}>
-              <Text style={styles.tableCell}>Apellido</Text>
+            <View style={stylesUsers.tableCol}>
+              <Text style={stylesUsers.tableCell}>Apellido</Text>
             </View>
-            <View style={styles.tableCol}>
-              <Text style={styles.tableCell}>Correo</Text>
+            <View style={stylesUsers.tableCol}>
+              <Text style={stylesUsers.tableCell}>Correo</Text>
             </View>
-            <View style={styles.tableCol}>
-              <Text style={styles.tableCell}>Función</Text>
+            <View style={stylesUsers.tableCol}>
+              <Text style={stylesUsers.tableCell}>Función</Text>
             </View>
           </View>
         </View>
