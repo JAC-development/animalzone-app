@@ -149,3 +149,15 @@ export async function handleGetUserDates(ref) {
 
   return data;
 }
+
+export async function handleGetUserDatesPM(ref, refDate) {
+  const snapshot = await getDocs(collection(firestore, 'attendance', ref, 'history'));
+
+  const data = snapshot.docs.map((doc) => ({
+    ...doc.data(),
+  }));
+
+  const month = data.filter((date) => new Date(date.date.seconds * 1000).getMonth() === new Date(refDate).getMonth());
+
+  return month.length;
+}
