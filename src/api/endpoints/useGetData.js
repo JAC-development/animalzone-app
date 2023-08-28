@@ -139,6 +139,19 @@ export async function handleIdToName(id) {
   return data.name + ' ' + data.surname;
 }
 
+export async function handleNameToId(email) {
+  const DocData = await getDocs(query(collection(firestore, 'usuarios'), where('email', '==', email)));
+
+  // console.log(DocData.docs, 'holaaaaaa');
+
+  const data = DocData.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+
+  return data[0].id;
+}
+
 export async function handleGetAllData() {
   const snapshot = await getDocs(collection(firestore, 'usuarios'));
 
