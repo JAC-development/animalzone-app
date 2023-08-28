@@ -1,13 +1,46 @@
 'use client';
-import React from 'react';
+import { getFirestore, collection, query, onSnapshot } from 'firebase/firestore';
+import { app } from 'firebaseConfig';
 import { ChevronRightIcon, EllipsisHorizontalCircleIcon } from '@heroicons/react/24/solid';
 import { useState, useContext } from 'react';
 import { AuthContext } from 'hooks/useAuth';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { handleIdToName } from 'api/endpoints/useGetData';
+
+// get the firestore
+const firestore = getFirestore(app);
 
 export default function Admin() {
   const show = true;
   const [openTab, setOpenTab] = useState('viewUsers');
   const { userData } = useContext(AuthContext);
+  const id = 'animalzone';
+
+  const notify = (text) => {
+    toast.warn(text, {
+      position: 'bottom-right',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      toastId: id,
+      icon: false,
+      progress: undefined,
+      theme: 'colored',
+    });
+    toast.clearWaitingQueue();
+  };
+  const q = query(collection(firestore, 'attendance'));
+  onSnapshot(q, (snapshot) => {
+    snapshot.docChanges().forEach(async (change) => {
+      if (change.type === 'modified') {
+        const name = await handleIdToName(change.doc.id);
+        notify(`${change.doc.data().status} - ${name}`);
+      }
+    });
+  });
   return (
     <div className="px-8 pb-16 pt-24 lg:px-14 xl:px-24 flex flex-col justify-between">
       {/* Main section */}
@@ -132,6 +165,7 @@ export default function Admin() {
           </div>
         </div>
       </div>
+      <ToastContainer limit={1} />
     </div>
   );
 }

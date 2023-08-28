@@ -118,6 +118,14 @@ export async function handleAddAttendance(data) {
   }
 }
 
+export async function handleIdToName(id) {
+  const DocData = await getDoc(doc(firestore, 'usuarios', id));
+
+  const data = DocData.data();
+
+  return data.name + ' ' + data.surname;
+}
+
 export async function handleGetAllData() {
   const snapshot = await getDocs(collection(firestore, 'usuarios'));
 
