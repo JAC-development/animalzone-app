@@ -219,6 +219,7 @@ const AdvanceRow = ({ data, del, edit }) => {
           </div>
         </td>
         <td className="px-10 py-5 text-center">{data?.record || '---'}</td>
+        <td className="px-10 py-5 text-center">{data?.email || '---'}</td>
         <td className="px-10 py-5 text-center capitalize">{data?.rol}</td>
         <td className="px-10 py-5 flex gap-2 items-center justify-center">
           <button
@@ -241,6 +242,26 @@ const AdvanceRow = ({ data, del, edit }) => {
   );
 };
 
+const AdvanceMonitorRow = ({ data }) => {
+  return (
+    <>
+      <tr>
+        <td className="px-10 py-5 text-center">
+          <div className="flex items-center justify-center gap-4">
+            {/* <div className="w-8 h-8 bg-black rounded-full"></div> */}
+            <p className="capitalize">
+              {data.name} {data.surname}
+            </p>
+          </div>
+        </td>
+        <td className="px-10 py-5 text-center">{data?.record || '---'}</td>
+        <td className="px-10 py-5 text-center">{data?.email || '---'}</td>
+        <td className="px-10 py-5 text-center capitalize">{data?.rol}</td>
+      </tr>
+    </>
+  );
+};
+
 const TableRow = async () => {
   const userArray = await handleGetAllData();
 
@@ -248,4 +269,4 @@ const TableRow = async () => {
   return userList;
 };
 
-export { TableRow, AdvanceRow, UserRow, SimpleAttendace, AttendanceRow };
+export { TableRow, AdvanceRow, UserRow, SimpleAttendace, AttendanceRow, AdvanceMonitorRow };

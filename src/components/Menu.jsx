@@ -49,7 +49,7 @@ const Menu = ({ users, amount }) => {
               <img src={profile} className="w-[100px] h-[100px]" />
             </div>
             <div>
-              {isClient ? <h2>{userData.name}</h2> : <h2>Usuario</h2>}
+              {isClient ? <h2 className="capitalize">{userData.name}</h2> : <h2>Usuario</h2>}
               <p className="font-light">Administrador</p>
             </div>
           </div>
@@ -108,7 +108,7 @@ const Menu = ({ users, amount }) => {
     return (
       <aside className="hidden lg:flex flex-col items-center justify-around p-4 h-screen w-3/12 2xl:w-1/5">
         <div className="flex flex-col items-center">
-          <Link href={'/monitor'}>
+          <Link href={'/monitor/attendance'}>
             <Image src={logo} width={100} height={100} alt="logo" />
           </Link>
 
@@ -117,20 +117,20 @@ const Menu = ({ users, amount }) => {
               <img src={profile} className="w-[100px] h-[100px]" />
             </div>
             <div>
-              {isClient ? <h2>{userData.name}</h2> : <h2>Usuario</h2>}
+              {isClient ? <h2 className="capitalize">{userData.name}</h2> : <h2>Usuario</h2>}
               <p className="font-light">Monitor</p>
             </div>
           </div>
         </div>
 
         <div className="flex flex-col gap-8">
-          <Link href={'/monitor'}>
+          <Link href={'/monitor/users'}>
             <div className="flex gap-4 items-center">
-              <div className={pathname === '/monitor' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
+              <div className={pathname === '/monitor/users' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
                 <ClockIcon className="w-8 h-8" />
               </div>
               <div>
-                <p>Historial</p>
+                <p>Usuarios</p>
               </div>
             </div>
           </Link>
@@ -184,7 +184,7 @@ const Menu = ({ users, amount }) => {
               <img src={profile} className="w-[100px] h-[100px]" />
             </div>
             <div>
-              {isClient ? <h2>{userData.name}</h2> : <h2>Usuario</h2>}
+              {isClient ? <h2 className="capitalize">{userData.name}</h2> : <h2>Usuario</h2>}
               <p className="font-light">Usuario</p>
             </div>
           </div>
@@ -266,7 +266,7 @@ const NavMobiile = () => {
                 <img src={profile} className="w-[100px] h-[100px]" />
               </div>
               <div>
-                {isClient ? <h2>{userData.name}</h2> : <h2>Usuario</h2>}
+                {isClient ? <h2 className="capitalize">{userData.name}</h2> : <h2>Usuario</h2>}
                 <p className="font-light">Administrador</p>
               </div>
             </div>
@@ -339,21 +339,20 @@ const NavMobiile = () => {
                 <img src={profile} className="w-[100px] h-[100px]" />
               </div>
               <div>
-                {isClient ? <h2>{userData.name}</h2> : <h2>Usuario</h2>}
+                {isClient ? <h2 className="capitalize">{userData.name}</h2> : <h2>Usuario</h2>}
                 <p className="font-light">Monitor</p>
               </div>
             </div>
           </div>
 
           <div className="flex flex-col gap-8">
-            <Link href={'/monitor'} onClick={() => handleClick()}>
+            <Link href={'/monitor/users'} onClick={() => handleClick()}>
               <div className="flex gap-4 items-center">
-                <div className={pathname === '/monitor' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg p-4' : 'w-12 h-12 grid place-items-center rounded-lg'}>
+                <div className={pathname === '/monitor/users' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg p-4' : 'w-12 h-12 grid place-items-center rounded-lg'}>
                   <ClockIcon className="w-8 h-8" />
                 </div>
                 <div>
-                  <p>Historial</p>
-                  <p className="font-light">1 Capturado</p>
+                  <p>Usuarios</p>
                 </div>
               </div>
             </Link>
@@ -411,8 +410,8 @@ const NavMobiile = () => {
                 <img src={profile} className="w-[100px] h-[100px]" />
               </div>
               <div>
-                {isClient ? <h2>{userData.name}</h2> : <h2>Usuario</h2>}
-                <p className="font-light">{userData?.rol || 'rol'}</p>
+                {isClient ? <h2 className="capitalize">{userData.name}</h2> : <h2>Usuario</h2>}
+                <p className="font-light">Usuario</p>
               </div>
             </div>
           </div>

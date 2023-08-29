@@ -51,7 +51,11 @@ export default function Home() {
           const response = login(data.email, res.rol);
           setValue(res);
           setUserData(res);
-          route.push(`/${response}`);
+          if (response === 'monitor') {
+            route.push(`/${response}/attendance`);
+          } else {
+            route.push(`/${response}`);
+          }
         } else {
           notify('Credenciales incorrectas');
         }

@@ -265,6 +265,7 @@ export default function AdminUsers() {
               <tr>
                 <th className="px-10 py-5 top-0">Nombre Completo</th>
                 <th className="px-10 py-5 top-0">Record</th>
+                <th className="px-10 py-5 top-0">Correo</th>
                 <th className="px-10 py-5 top-0">Rol</th>
                 <th className="px-10 py-5 top-0">Acciones</th>
               </tr>

@@ -69,7 +69,7 @@ export default function Home() {
             <PDFDownloadLink
               document={generatePDF()}
               fileName="Historial de asistencias.pdf"
-              className="col-span-1 md:col-start-9 bg-yellow-400 hover:bg-yellow-600 p-3 rounded-full font-bold flex items-center justify-center"
+              className="bg-yellow-400 hover:bg-yellow-600 py-3 px-6 text-center rounded-full font-bold flex items-center justify-center mt-12 mb-4"
             >
               <PrinterIcon className="w-5 h-5 mx-auto" />
             </PDFDownloadLink>
