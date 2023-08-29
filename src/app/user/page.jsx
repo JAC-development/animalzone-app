@@ -59,7 +59,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="px-8 py-12 lg:px-14 xl:px-24 lg:pt-24 w-full">
+    <div className="px-8 py-12 lg:px-14 xl:px-24 lg:pt-24 w-full max-h-screen overflow-y-scroll">
       {/* Go back section on top */}
       <div className="flex gap-4 lg:mb-16">
         <div>

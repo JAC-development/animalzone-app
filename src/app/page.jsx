@@ -73,10 +73,10 @@ export default function Home() {
         </div>
         <div className="my-10">
           <p className="font-light">ANIMAL ZONE</p>
-          <p className="text-3xl md:text-5xl">Wellcome back!</p>
+          <p className="text-3xl md:text-5xl">Bienvenido!</p>
         </div>
         <form className="flex flex-col my-4 text-start gap-2" ref={form} onSubmit={handleSubmit}>
-          <label htmlFor="username">Username</label>
+          <label htmlFor="username">Correo electronico</label>
           <input
             className="rounded-full border-2 border-black px-4 py-2 outline-none mb-6"
             id="username"
@@ -84,9 +84,9 @@ export default function Home() {
             autoComplete="email"
             onChange={(e) => setUser(e.target.value)}
             type="text"
-            placeholder="Enter your username"
+            placeholder="Introduce tu correo"
           />
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password">Contraseña</label>
           <input
             className="rounded-full border-2 border-black px-4 py-2 outline-none mb-6"
             id="password"
@@ -94,26 +94,26 @@ export default function Home() {
             name="password"
             onChange={(e) => setPass(e.target.value)}
             type="password"
-            placeholder="Enter your password"
+            placeholder="Introduce tu contraseña"
           />
 
           <div className="w-full flex justify-center my-4">
             <button
               disabled={!user || !pass}
-              className="w-3/5 flex disabled:bg-slate-300 justify-center items-center gap-4 bg-primary-y rounded-full px-4 py-2 font-bold hover:opacity-75 transition"
+              className="w-11/12 sm:w-3/5 flex disabled:bg-slate-300 justify-center items-center gap-4 bg-primary-y rounded-full px-4 py-2 font-bold hover:opacity-75 transition"
               type="submit"
             >
-              Login <ChevronRightIcon className="w-6 h-6" />
+              Iniciar sesión <ChevronRightIcon className="w-6 h-6" />
             </button>
           </div>
         </form>
         <div className="my-4">
           <Link className="font-bold text-slate-500" href="#">
-            Forgot your password?
+            ¿Olvidaste tu contraseña?
           </Link>
         </div>
         <div className="w-full sm:w-4/5 font-light text-slate-600 mt-6 mx-auto">
-          <p>All data is saved on the cloud, if you have any problem with the sign in please contact support.</p>
+          <p>Todos los datos se guardan en la nube, si tiene algún problema con el inicio de sesión, comuníquese con el soporte.</p>
         </div>
       </div>
       <ToastContainer />
