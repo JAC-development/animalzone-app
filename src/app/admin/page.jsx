@@ -27,7 +27,7 @@ export default function Admin() {
 
         {/* Report quick action block */}
         <div className="py-8">
-          <button className="col-span-1 md:col-start-8 bg-yellow-400 hover:opacity-80 transition py-3 px-8 rounded-full flex items-center justify-center font-semibold">
+          <button disabled className="col-span-1 md:col-start-8 disabled:opacity-40 bg-yellow-400 hover:opacity-80 transition py-3 px-8 rounded-full flex items-center justify-center font-semibold">
             Generar reporte
             <span className="pl-2">
               <ChevronRightIcon className="w-5 h-5" />
@@ -59,7 +59,7 @@ export default function Admin() {
           </ul>
           <div className="mt-4">
             <div className={openTab === 'viewUsers' ? 'block' : 'hidden'}>
-              {show ? (
+              {!show ? (
                 /* Table for list of users */
                 <div id="employees-table" className="w-full">
                   <table className="block sm:table py-4 mx-auto w-full max-w-full overflow-x-auto">

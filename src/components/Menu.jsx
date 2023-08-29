@@ -10,7 +10,7 @@ import { useLocalStorage } from 'hooks/useLocalStorage';
 import { AuthContext } from 'hooks/useAuth';
 import { useState, useContext, useEffect } from 'react';
 import { Slide } from 'react-awesome-reveal';
-import { Bars3Icon, UserIcon, ClockIcon, DocumentTextIcon, Cog6ToothIcon, InformationCircleIcon, ArrowRightOnRectangleIcon, XMarkIcon, CameraIcon } from '@heroicons/react/24/outline';
+import { Bars3Icon, UserIcon, ClockIcon, DocumentTextIcon, Cog6ToothIcon, InformationCircleIcon, ArrowRightOnRectangleIcon, XMarkIcon, CameraIcon, QrCodeIcon } from '@heroicons/react/24/outline';
 
 // images
 import logo from '@logos/primary-logo.png';
@@ -77,13 +77,13 @@ const Menu = ({ users, amount }) => {
               </div>
             </div>
           </Link>
-          <Link href={'/admin'}>
-            <div className="flex gap-4 items-center opacity-50">
-              <div className={pathname === '/admin/settings' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
-                <Cog6ToothIcon className="w-8 h-8" />
+          <Link href={'/admin/qr'}>
+            <div className="flex gap-4 items-center">
+              <div className={pathname === '/admin/qr' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
+                <QrCodeIcon className="w-8 h-8" />
               </div>
               <div>
-                <p>Configuraci&oacute;n</p>
+                <p>Codigo QR</p>
               </div>
             </div>
           </Link>
@@ -295,13 +295,13 @@ const NavMobiile = () => {
                 </div>
               </div>
             </Link>
-            <Link href={'/admin'} onClick={() => handleClick()}>
-              <div className="flex gap-4 items-center opacity-50">
-                <div className={pathname === '/admin/settings' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
-                  <Cog6ToothIcon className="w-8 h-8" />
+            <Link href={'/admin/qr'} onClick={() => handleClick()}>
+              <div className="flex gap-4 items-center">
+                <div className={pathname === '/admin/qr' ? 'w-12 h-12 bg-primary-y grid place-items-center rounded-lg' : 'w-12 h-12 grid place-items-center rounded-lg'}>
+                  <QrCodeIcon className="w-8 h-8" />
                 </div>
                 <div>
-                  <p>Configuraci&oacute;n</p>
+                  <p>Codigo QR</p>
                 </div>
               </div>
             </Link>

@@ -116,7 +116,7 @@ export default function AttendanceViewMonitor() {
             {iseClient &&
               userArray.map((user) => (
                 <option className="capitalize" value={user?.id} key={user.id}>
-                  {user.name} {user.surname} <strong>({user.email})</strong>
+                  {user.name} {user.surname} ({user.email})
                 </option>
               ))}
             ;
